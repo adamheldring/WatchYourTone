@@ -12,7 +12,9 @@ state = {
     [false, false, false, false, false, false, false, false]
   ],
   playing: false,
-  activeBar: 0
+  activeBar: 0,
+  bpm: 120,
+  volume: 0.6
 }
 
 componentDidMount = () => {
@@ -42,6 +44,23 @@ handleNoteClick = (drumIndex, barIndex) => {
   })
 }
 
+handleBpmChange = e => {
+  this.setState({
+    bpm: e.target.value
+  }, () => {
+    console.log("STATE bpm: ", this.state.bpm)
+    console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
+    Tone.Transport.bpm.value = this.state.bpm
+})}
+
+handleVolumeChange = e => {
+  this.setState({
+    volume: e.target.value / 100
+  }, () => {
+    Tone.Transport.bpm.value = this.state.bpm
+})}
+
+
 drumsGenerator = () => {
   const drums = [
     new Tone.MembraneSynth(),
@@ -53,14 +72,14 @@ drumsGenerator = () => {
   drums[1].oscillator.type = "sawtooth"
   drums[2].oscillator.type = "square"
 
-  const gain = new Tone.Gain(0.3)
+  const gain = new Tone.Gain(this.state.volume)
   gain.toMaster()
 
   drums.forEach(drum => drum.connect(gain))
 
   let index = 0
 
-  Tone.Transport.bpm.value = 140
+  Tone.Transport.bpm.value = this.state.bpm
   Tone.Transport.scheduleRepeat((time) => {
     let step = index % 8
     const notes = ["C1", "C3", "C4"]
@@ -76,7 +95,7 @@ drumsGenerator = () => {
 }
 
 render() {
-  const { drums, activeBar } = this.state
+  const { drums, activeBar, volume, bpm } = this.state
   return (
     <div className="sequenser-container">
       <h3>SEQUENSER</h3>
@@ -85,7 +104,7 @@ render() {
           <thead>
             <tr>
               {drums[0].map((bars, index) => {
-                return <th className={(index === activeBar) ?
+                return <th key={index} className={(index === activeBar) ?
                   "barIndicator barIndicator--active" :
                   "barIndicator"
                 }>{index}</th>
@@ -93,7 +112,7 @@ render() {
             </tr>
           </thead>
           <tbody>
-          {this.state.drums.map((drum, drumIndex) => {
+          {drums.map((drum, drumIndex) => {
             return <SeqInstrument
               key={drumIndex}
               drumIndex={drumIndex}
@@ -111,6 +130,26 @@ render() {
       <div>
         <button onClick={this.startPlaying}>PLAY</button>
         <button onClick={this.stopPlaying}>STOP</button>
+      </div>
+      <div className="meters">
+        <input
+          name="bpm"
+          type="range"
+          min="40"
+          max="300"
+          value={bpm}
+          onChange={this.handleBpmChange}
+          />
+        <label htmlFor="volume">{this.state.bpm} BPM</label>
+        <br />
+        <input
+          name="bpm"
+          type="range"
+          min="0"
+          max="100"
+          value={volume * 100}
+          onChange={this.handleVolumeChange} />
+        <label htmlFor="volume">{parseInt(this.state.volume * 100)}% Volume</label>
       </div>
     </div>
   )

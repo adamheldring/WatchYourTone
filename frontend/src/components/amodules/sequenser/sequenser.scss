@@ -1,5 +1,8 @@
 .sequenser-container {
   // background: lightblue;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .drums-container {
@@ -29,4 +32,10 @@
   &--active {
     background: green;
   }
+}
+
+.meters {
+  // background: lightblue;
+  color: lightgrey;
+  width: 400px;
 }
