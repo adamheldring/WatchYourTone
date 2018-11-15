@@ -76,7 +76,7 @@ drumsGenerator = () => {
 }
 
 render() {
-  const { drums } = this.state
+  const { drums, activeBar } = this.state
   return (
     <div className="sequenser-container">
       <h3>SEQUENSER</h3>
@@ -85,7 +85,10 @@ render() {
           <thead>
             <tr>
               {drums[0].map((bars, index) => {
-                return <th className="barIndicator">{index}</th>
+                return <th className={(index === activeBar) ?
+                  "barIndicator barIndicator--active" :
+                  "barIndicator"
+                }>{index}</th>
               })}
             </tr>
           </thead>
