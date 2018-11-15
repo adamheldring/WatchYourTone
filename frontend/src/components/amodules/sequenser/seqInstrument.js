@@ -4,7 +4,6 @@ class SeqInstrument extends React.Component {
 
 
 render() {
-  console.log(this.props.bars)
   return (
     <tr className="seqInstrument-row">
       {this.props.bars.map((bar, barIndex) => {
