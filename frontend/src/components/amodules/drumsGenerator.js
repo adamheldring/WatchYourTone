@@ -1,7 +1,8 @@
 import Tone from "tone"
 
-export const drumsGenerator = time => {
+export const drumsGenerator = (drumMatrix) => {
   console.log('Hello from drums')
+  console.table(drumMatrix)
   const drums = [
     new Tone.MembraneSynth(),
     new Tone.Synth(),
@@ -20,11 +21,11 @@ export const drumsGenerator = time => {
 
   let index = 0
   Tone.Transport.bpm.value = 140
-  Tone.Transport.scheduleRepeat(() => {
+  Tone.Transport.scheduleRepeat((time) => {
     if (index % 2 === 0) drums[0].triggerAttackRelease("C1", "8n", time)
     if (index % 8 === 0) drums[1].triggerAttackRelease("C4", "8n", time)
-    // drums[1].triggerAttackRelease("c7", "16n", time)
 
+    // drums[1].triggerAttackRelease("c7", "16n", time)
     // console.log(index)
     index++
   }, "8n")

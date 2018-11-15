@@ -15,7 +15,7 @@ state = {
 }
 
 componentDidMount = () => {
-  drumsGenerator()
+  drumsGenerator(this.state.drums)
 }
 componentWillUnmount = () => {
   Tone.Transport.stop()
@@ -49,12 +49,18 @@ render() {
       <h3>SEQUENSER</h3>
       <div className="drums-container">
         <table>
+          <thead>
+            <tr>
+              {this.state.drums[0].map((bars, index) => {
+                return <th className="barIndicator">{index}</th>
+              })}
+            </tr>
+          </thead>
           <tbody>
-
           {this.state.drums.map((drum, drumIndex) => {
             return <SeqInstrument
               key={drumIndex}
-              instrument={drumIndex}
+              drumIndex={drumIndex}
               bars={this.state.drums[drumIndex]}
               drumMatrix={this.state.drums}
               handleNoteClick={(barIndex) => this.handleNoteClick(drumIndex, barIndex)}

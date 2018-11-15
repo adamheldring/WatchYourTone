@@ -9,10 +9,12 @@ render() {
     <tr className="seqInstrument-row">
       {this.props.bars.map((bar, barIndex) => {
         return <td
-          className="noteBox"
+          className={this.props.drumMatrix[this.props.drumIndex][barIndex] ?
+            "noteBox noteBox--active" : "noteBox"
+          }
           key={barIndex}
           onClick={() => this.props.handleNoteClick(barIndex)}
-        >{barIndex+1}</td>
+        ></td>
       })}
     </tr>
   )
