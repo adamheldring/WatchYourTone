@@ -1,5 +1,5 @@
 import React from "react"
-import Sequenser from "../../sequenser/sequenser"
+import Sequenser from "../../amodules/sequenser/sequenser"
 import "./composerPage.scss"
 
 

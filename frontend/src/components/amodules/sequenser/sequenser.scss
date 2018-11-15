@@ -1,0 +1,20 @@
+.sequenser-container {
+  // background: lightblue;
+}
+
+.drums-container {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+
+.noteBox {
+  background: lightgrey;
+  width: 50px;
+  height: 50px;
+  border-radius: 25px;
+
+  &--active {
+    background: green;
+  }
+}
