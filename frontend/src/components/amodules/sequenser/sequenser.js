@@ -11,17 +11,26 @@ state = {
     [false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false]
   ],
-  playing: false,
   activeBar: 0,
   bpm: 120,
-  volume: 0.6
 }
 
-componentDidMount = () => {
+componentDidMount() {
+  Tone.Transport.cancel()
   this.drumsGenerator()
+  this.checkForActiveSession()
+
 }
-componentWillUnmount = () => {
+
+componentWillUnmount() {
   Tone.Transport.stop()
+  sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
+}
+
+checkForActiveSession = () => {
+  if (sessionStorage.getItem("drums")) {
+    this.setState({ drums: JSON.parse(sessionStorage.getItem("drums"))})
+  }
 }
 
 startPlaying = () => {
@@ -41,7 +50,7 @@ handleNoteClick = (drumIndex, barIndex) => {
   newDrumMatrix[drumIndex][barIndex] = !this.state.drums[drumIndex][barIndex]
   this.setState({
     drums: newDrumMatrix
-  })
+  }, console.table(this.state.drums))
 }
 
 handleBpmChange = e => {
@@ -52,14 +61,6 @@ handleBpmChange = e => {
     console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
     Tone.Transport.bpm.value = this.state.bpm
 })}
-
-handleVolumeChange = e => {
-  this.setState({
-    volume: e.target.value / 100
-  }, () => {
-    Tone.Transport.bpm.value = this.state.bpm
-})}
-
 
 drumsGenerator = () => {
   const drums = [
@@ -72,7 +73,7 @@ drumsGenerator = () => {
   drums[1].oscillator.type = "sawtooth"
   drums[2].oscillator.type = "square"
 
-  const gain = new Tone.Gain(this.state.volume)
+  const gain = new Tone.Gain(0.8)
   gain.toMaster()
 
   drums.forEach(drum => drum.connect(gain))
@@ -80,8 +81,9 @@ drumsGenerator = () => {
   let index = 0
 
   Tone.Transport.bpm.value = this.state.bpm
-  Tone.Transport.scheduleRepeat((time) => {
+  Tone.Transport.scheduleRepeat(time => {
     let step = index % 8
+    this.setState({ activeBar: step })
     const notes = ["C1", "C3", "C4"]
     for (let i = 0; i < this.state.drums.length; i++) {
       if (this.state.drums[i][step]) {
@@ -89,13 +91,12 @@ drumsGenerator = () => {
       }
     }
     index++
-    this.setState({ activeBar: index % 8}, console.log(this.state.activeBar))
   }, "8n")
 
 }
 
 render() {
-  const { drums, activeBar, volume, bpm } = this.state
+  const { drums, activeBar, bpm } = this.state
   return (
     <div className="sequenser-container">
       <h3>SEQUENSER</h3>
@@ -140,16 +141,7 @@ render() {
           value={bpm}
           onChange={this.handleBpmChange}
           />
-        <label htmlFor="volume">{this.state.bpm} BPM</label>
-        <br />
-        <input
-          name="bpm"
-          type="range"
-          min="0"
-          max="100"
-          value={volume * 100}
-          onChange={this.handleVolumeChange} />
-        <label htmlFor="volume">{parseInt(this.state.volume * 100)}% Volume</label>
+        <label htmlFor="bpm">{this.state.bpm} BPM</label>
       </div>
     </div>
   )
