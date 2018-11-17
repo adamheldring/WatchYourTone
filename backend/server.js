@@ -18,63 +18,50 @@ mongoose.connection.on("error", err => console.error("Connection error:", err))
 mongoose.connection.once("open", () => console.log("Connected to mongodb"))
 
 
-// CREATE MODEL (Songs / Settings?)
-
-// const Product = mongoose.model("Product", {
-//   email: String,
-//   title: String,
-//   description: String,
-//   price: Number,
-//   image: String,
-//   category: String,
-//   rating: Number,
-//   nrOfVotes: Number,
-//   productId: Number
-// })
+const Song = mongoose.model("Song", {
+  songId: Number,
+  createdDate: Date,
+  songTitle: String,
+  composer: String,
+  drums: String
+})
 
 app.get("/", (req, res) => {
   res.send("WYT API")
 })
 
 
-// CREATE GET ALL ENDPOINT (Songs / settings?)
+// CREATE GET ALL SONGS ENDPOINT (Songs / settings?)
 
-// app.get("/products/", (req, res) => {
-//   const options = {}
-//   if (req.query.category) {
-//   options.category = req.query.category
-// }
-//   Product.find(options).then(products => {
-//     res.json(products)
-//   })
-// })
+app.get("/songs/", (req, res) => {
+  Song.find().then(songs => {
+    res.json(songs)
+  })
+})
 
+// CREATE POST SONG ENDPOINT
 
+app.post("/songs/", (req, res) => {
+  const song = new Song(req.body)
+  console.log("Body: ", req.body)
 
-// CREATE GET ONE ENDPOINT
-
-// app.get("/products/:productId", (req, res) => {
-//   Product.findOne({ productId: req.params.productId } , function(err, product) {
-//     if (err) res.send(err)
-//     res.json(product)
-//     console.log(product)
-//   })
-// })
+  song.save()
+    .then(() => { res.status(201).send("Song created") })
+    .catch(err => { res.status(400).send(err) })
+})
 
 
-// CREATE POST ENDPOINT
+// CREATE GET ONE ENDPOINT (Song details and settings)
 
-// app.post("/products/", (req, res) => {
-//   const product = new Product(req.body)
-//   console.log("Body: ", req.body)
-//
-//   product.nrOfVotes = 0
-//   product.rating = 0
-//
-//   product.save()
-//     .then(() => { res.status(201).send("Product created") })
-//     .catch(err => { res.status(400).send(err) })
-// })
+app.get("/songs/:songId", (req, res) => {
+  Song.findOne({ songId: req.params.songId } , function(err, song) {
+    if (err) res.send(err)
+    res.json(song)
+    console.log(song)
+  })
+})
+
+
 
 
 // MAYBE CREATE PUT ENDPOINT FOR UPDATES

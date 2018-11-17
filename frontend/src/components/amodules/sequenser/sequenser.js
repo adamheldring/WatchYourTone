@@ -19,7 +19,6 @@ componentDidMount() {
   Tone.Transport.cancel()
   this.drumsGenerator()
   this.checkForActiveSession()
-
 }
 
 componentWillUnmount() {

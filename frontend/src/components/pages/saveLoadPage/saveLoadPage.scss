@@ -1,0 +1,32 @@
+.saveForm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: lightgrey;
+}
+
+.formInput {
+  display: block;
+
+  &__field {
+    margin: 5px 0;
+  }
+
+  &__button {
+    width: 100%;
+    margin: 5px 0;
+  }
+
+  &__select {
+    width: 130px;
+    margin: 5px 0;
+  }
+}
+
+.loadForm-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: lightgrey;
+}
