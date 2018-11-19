@@ -9,7 +9,11 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
-const mongoServer = "mongodb://localhost/watchYourTone"
+// AFTER HEROKU DEPLOY
+const mongoServer = process.env.MONGO_URL || "mongodb://localhost/watchYourTone"
+
+// BEFORE HEROKU DEPLOY
+// const mongoServer = "mongodb://localhost/watchYourTone"
 
 mongoose.connect(mongoServer, { useNewUrlParser: true })
 mongoose.Promise = Promise
@@ -114,4 +118,11 @@ app.get("/songs/:songId", (req, res) => {
 // })
 
 
-app.listen(8080, () => console.log("WYT API listening on port 8080!"))
+// AFTER HEROKU DEPLOY
+const port = process.env.PORT || 8080
+app.listen(port, () => {
+  console.log(`WYT API LIVE listening on port ${port}`)
+})
+
+// BEFORE HEROKU DEPLOY
+// app.listen(8080, () => console.log("WYT API listening on port 8080!"))
