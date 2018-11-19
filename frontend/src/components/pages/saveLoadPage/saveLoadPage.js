@@ -54,7 +54,8 @@ submitSave = e => {
     createdDate: new Date(),
     songTitle,
     composer,
-    drums: sessionStorage.getItem("drums")
+    drums: sessionStorage.getItem("drums"),
+    synth: sessionStorage.getItem("synth")
   }
   console.log(newSong)
 
@@ -110,7 +111,9 @@ loadSongToSequenser = () => {
   const { loadedSong } = this.state
   console.log("NEWLY LOADED SONG: ", loadedSong)
   console.table(JSON.parse(loadedSong.drums))
+  console.table(JSON.parse(loadedSong.synth))
   sessionStorage.setItem("drums", loadedSong.drums)
+  sessionStorage.setItem("synth", loadedSong.synth)
 }
 
 

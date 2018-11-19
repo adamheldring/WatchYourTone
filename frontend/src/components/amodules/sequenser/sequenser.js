@@ -15,8 +15,7 @@ state = {
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   ],
   drums: [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -25,6 +24,7 @@ state = {
   ],
   activeBar: 0,
   bpm: 120,
+  synthWaveForm: "triangle"
 }
 
 componentDidMount() {
@@ -36,11 +36,15 @@ componentDidMount() {
 componentWillUnmount() {
   Tone.Transport.stop()
   sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
+  sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
 }
 
 checkForActiveSession = () => {
   if (sessionStorage.getItem("drums")) {
-    this.setState({ drums: JSON.parse(sessionStorage.getItem("drums"))})
+    this.setState({
+      drums: JSON.parse(sessionStorage.getItem("drums")),
+      synth: JSON.parse(sessionStorage.getItem("synth"))
+    })
   }
 }
 
@@ -84,8 +88,12 @@ handleBpmChange = e => {
 
 soundGenerator = () => {
 
+  // FUTURE REVERBS AND FX SECTION
+  const freeverb = new Tone.Freeverb(0.05, 15000).toMaster()
   const gain = new Tone.Gain(0.6)
-  gain.toMaster()
+  gain.connect(freeverb)
+
+  // gain.toMaster()
 
   // --------------------//
   //    DRUMS SECTION    //
@@ -128,6 +136,7 @@ soundGenerator = () => {
   const synths = []
   for (let i = 0; i < this.state.synth[0].length; i++) {
     synths.push(new Tone.Synth())
+    // synths[i].oscillator.type = "triangle"
   }
   // new Tone.Synth(),
   // new Tone.Synth(),
@@ -185,6 +194,7 @@ soundGenerator = () => {
     // }
     for (let i = 0; i < this.state.synth.length; i++) {
       if (this.state.synth[i][step]) {
+          synths[i].oscillator.type = this.state.synthWaveForm
           synths[i].triggerAttackRelease(synthNotes[i], "8n", time)
       }
     }
