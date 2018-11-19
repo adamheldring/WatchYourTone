@@ -87,10 +87,6 @@ submitLoad = e => {
       })
 
     // CREATE MESSAGE (Are you sure, do you wnat to save song first?)
-    // LOAD SONG FROM DB
-
-        // SET SONG INTO LOCALSTORAGE
-
   }
 }
 

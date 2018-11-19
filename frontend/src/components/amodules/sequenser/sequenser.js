@@ -64,16 +64,44 @@ handleBpmChange = e => {
 drumsGenerator = () => {
   const drums = [
     new Tone.MembraneSynth(),
-    new Tone.Synth(),
-    new Tone.Synth()
+    new Tone.PluckSynth(
+      {
+        attackNoise: 2,
+        dampening: 4000,
+        resonance: 0.45
+      }
+    ),
+    new Tone.MetalSynth(
+      {
+        frequency: 200,
+        envelope: {
+          attack: 0.001,
+          decay: 0.05,
+          release: 0.05
+        },
+        harmonicity: 5.1,
+        modulationIndex: 32,
+        resonance: 4000,
+        octaves: 1.5
+      }
+    )
   ]
 
   drums[0].oscillator.type = "sine"
-  drums[1].oscillator.type = "sawtooth"
-  drums[2].oscillator.type = "square"
+  // drums[1].oscillator.type = "sawtooth"
+  // drums[2].oscillator.type = "sine"
 
-  const gain = new Tone.Gain(0.8)
-  gain.toMaster()
+  const gain = new Tone.Gain(0.6)
+
+  const freeverb = new Tone.Freeverb(0.02, 15000).toMaster();
+  gain.connect(freeverb)
+
+
+  // const jcReverb = new Tone.JCReverb(0.02).toMaster();
+  // gain.connect(jcReverb)
+
+    // gain.toMaster()
+
 
   drums.forEach(drum => drum.connect(gain))
 
@@ -83,10 +111,19 @@ drumsGenerator = () => {
   Tone.Transport.scheduleRepeat(time => {
     let step = index % 8
     this.setState({ activeBar: step })
-    const notes = ["C1", "C3", "C4"]
+    const notes = ["C1", "C2", "C4"]
     for (let i = 0; i < this.state.drums.length; i++) {
       if (this.state.drums[i][step]) {
-        drums[i].triggerAttackRelease(notes[i], "8n", time)
+        switch(i) {
+          case 1:
+            drums[i].triggerAttackRelease("C2", "16n", time)
+            break
+          case 2:
+            drums[i].triggerAttackRelease("16n", time, 0.6)
+            break
+          default:
+            drums[i].triggerAttackRelease(notes[i], "8n", time)
+        }
       }
     }
     index++
@@ -107,7 +144,7 @@ render() {
                 return <th key={index} className={(index === activeBar) ?
                   "barIndicator barIndicator--active" :
                   "barIndicator"
-                }>{index}</th>
+                }>{index + 1}</th>
               })}
             </tr>
           </thead>
