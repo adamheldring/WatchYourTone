@@ -12,7 +12,7 @@ class SeqInstrument extends React.Component {
               "noteBox noteBox--active" : "noteBox"
             }
             key={barIndex}
-            onClick={() => this.props.handleNoteClick(barIndex)}
+            onClick={() => this.props.handleDrumClick(barIndex)}
           />
         })}
       </tr>

@@ -1,6 +1,6 @@
 import React from "react"
 import "./saveLoadPage.scss"
-
+import { WYT_SERVER_URL } from "../../constants"
 class SaveLoadPage extends React.Component {
 
 state = {
@@ -18,13 +18,12 @@ componentDidMount() {
 
 loadSongList() {
   console.log("Loading saved songlist...")
-  const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
-  console.log(`TEST: ${watchYourToneServer}/songs/`)
+  console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
 
   // BEFORE HEROKU
   // fetch("http://localhost:8080/songs/")
 
-  fetch(`${watchYourToneServer}/songs/`)
+  fetch(`${WYT_SERVER_URL}/songs/`)
     .then(response => response.json())
     .then(songList => {
       this.setState({
@@ -62,9 +61,8 @@ submitSave = e => {
   // BEFORE HEROKU
   // fetch("http://localhost:8080/songs/", {
 
-  const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
-  console.log(`TEST: ${watchYourToneServer}/songs/`)
-  fetch(`${watchYourToneServer}/songs/`, {
+  console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
+  fetch(`${WYT_SERVER_URL}/songs/`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -91,12 +89,12 @@ submitLoad = e => {
     console.log(`Loading song with id: ${songToLoad}...`)
 
     const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
-    console.log(`TEST: ${watchYourToneServer}/${songToLoad}`)
+    console.log(`TEST: ${WYT_SERVER_URL}/songs/${songToLoad}`)
 
     // BEFORE HEROKU
     // fetch(`http://localhost:8080/songs/${songToLoad}`)
 
-    fetch(`${watchYourToneServer}/songs/${songToLoad}`)
+    fetch(`${WYT_SERVER_URL}/songs/${songToLoad}`)
       .then(response => response.json())
       .then(loadedSong => {
         this.setState({

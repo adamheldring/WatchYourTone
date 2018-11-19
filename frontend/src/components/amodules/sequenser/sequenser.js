@@ -54,12 +54,20 @@ stopPlaying = () => {
   this.setState({ playing: false })
 }
 
-handleNoteClick = (drumIndex, barIndex) => {
+handleDrumClick = (drumIndex, barIndex) => {
   let newDrumMatrix = this.state.drums
   newDrumMatrix[drumIndex][barIndex] = !this.state.drums[drumIndex][barIndex]
   this.setState({
     drums: newDrumMatrix
   }, console.table(this.state.drums))
+}
+
+handleNoteClick = (synthKeyIndex, barIndex) => {
+  let newSynthMatrix = this.state.synth
+  newSynthMatrix[synthKeyIndex][barIndex] = !this.state.synth[synthKeyIndex][barIndex]
+  this.setState({
+    synth: newSynthMatrix
+  }, console.table(this.state.synth))
 }
 
 handleBpmChange = e => {
@@ -193,7 +201,7 @@ render() {
                 drumIndex={drumIndex}
                 bars={drums[drumIndex]}
                 drumMatrix={drums}
-                handleNoteClick={(barIndex) => this.handleNoteClick(drumIndex, barIndex)}
+                handleDrumClick={(barIndex) => this.handleDrumClick(drumIndex, barIndex)}
               />
             })}
             </tbody>
