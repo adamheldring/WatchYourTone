@@ -18,7 +18,13 @@ componentDidMount() {
 
 loadSongList() {
   console.log("Loading saved songlist...")
-  fetch("http://localhost:8080/songs/")
+  const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
+  console.log(`TEST: ${watchYourToneServer}/songs/`)
+
+  // BEFORE HEROKU
+  // fetch("http://localhost:8080/songs/")
+
+  fetch(`${watchYourToneServer}/songs/`)
     .then(response => response.json())
     .then(songList => {
       this.setState({
@@ -53,7 +59,12 @@ submitSave = e => {
   }
   console.log(newSong)
 
-  fetch("http://localhost:8080/songs/", {
+  // BEFORE HEROKU
+  // fetch("http://localhost:8080/songs/", {
+
+  const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
+  console.log(`TEST: ${watchYourToneServer}/songs/`)
+  fetch(`${watchYourToneServer}/songs/`, {
     headers: {
       "Content-Type": "application/json"
     },
@@ -78,7 +89,14 @@ submitLoad = e => {
     console.log("Choose a song to load...")
   } else {
     console.log(`Loading song with id: ${songToLoad}...`)
-    fetch(`http://localhost:8080/songs/${songToLoad}`)
+
+    const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
+    console.log(`TEST: ${watchYourToneServer}/${songToLoad}`)
+
+    // BEFORE HEROKU
+    // fetch(`http://localhost:8080/songs/${songToLoad}`)
+
+    fetch(`${watchYourToneServer}/songs/${songToLoad}`)
       .then(response => response.json())
       .then(loadedSong => {
         this.setState({

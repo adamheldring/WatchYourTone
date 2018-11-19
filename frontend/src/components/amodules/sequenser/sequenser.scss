@@ -9,6 +9,10 @@
   display: flex;
   justify-content: center;
   margin: auto;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .barIndicator {

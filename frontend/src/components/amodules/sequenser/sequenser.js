@@ -1,15 +1,25 @@
 import React from "react"
 import Tone from "tone"
 import SeqInstrument from "./seqInstrument"
+import SynthKey from "./synthKey"
 import "./sequenser.scss"
 
 class Sequenser extends React.Component {
 
 state = {
+  synth: [
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+  ],
   drums: [
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false]
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   ],
   activeBar: 0,
   bpm: 120,
@@ -92,10 +102,12 @@ drumsGenerator = () => {
   // drums[2].oscillator.type = "sine"
 
   const gain = new Tone.Gain(0.6)
+  gain.toMaster()
 
-  const freeverb = new Tone.Freeverb(0.02, 15000).toMaster();
-  gain.connect(freeverb)
 
+  // FUTURE REVERBS AND FX SECTION
+  // const freeverb = new Tone.Freeverb(0.02, 15000).toMaster();
+  // gain.connect(freeverb)
 
   // const jcReverb = new Tone.JCReverb(0.02).toMaster();
   // gain.connect(jcReverb)
@@ -109,7 +121,7 @@ drumsGenerator = () => {
 
   Tone.Transport.bpm.value = this.state.bpm
   Tone.Transport.scheduleRepeat(time => {
-    let step = index % 8
+    let step = index % 16
     this.setState({ activeBar: step })
     const notes = ["C1", "C2", "C4"]
     for (let i = 0; i < this.state.drums.length; i++) {
@@ -132,10 +144,36 @@ drumsGenerator = () => {
 }
 
 render() {
-  const { drums, activeBar, bpm } = this.state
+  const { synth, drums, activeBar, bpm } = this.state
   return (
     <div className="sequenser-container">
       <h3>SEQUENSER</h3>
+      <div className="synth-container">
+        <table>
+          <thead>
+            <tr>
+              {synth[0].map((bars, index) => {
+                return <th key={index} className={(index === activeBar) ?
+                  "barIndicator barIndicator--active" :
+                  "barIndicator"
+                }>{index + 1}</th>
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {synth.map((synthKey, synthKeyIndex) => {
+              return <SynthKey
+                key={synthKeyIndex}
+                synthKeyIndex={synthKeyIndex}
+                bars={synth[synthKeyIndex]}
+                synthKeyMatrix={synth}
+                handleNoteClick={(barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)}
+              />
+            })}
+            </tbody>
+        </table>
+      </div>
+
       <div className="drums-container">
         <table>
           <thead>
@@ -149,18 +187,16 @@ render() {
             </tr>
           </thead>
           <tbody>
-          {drums.map((drum, drumIndex) => {
-            return <SeqInstrument
-              key={drumIndex}
-              drumIndex={drumIndex}
-              bars={drums[drumIndex]}
-              drumMatrix={drums}
-              handleNoteClick={(barIndex) => this.handleNoteClick(drumIndex, barIndex)}
-            />
-          })}
-
-
-          </tbody>
+            {drums.map((drum, drumIndex) => {
+              return <SeqInstrument
+                key={drumIndex}
+                drumIndex={drumIndex}
+                bars={drums[drumIndex]}
+                drumMatrix={drums}
+                handleNoteClick={(barIndex) => this.handleNoteClick(drumIndex, barIndex)}
+              />
+            })}
+            </tbody>
         </table>
       </div>
 
