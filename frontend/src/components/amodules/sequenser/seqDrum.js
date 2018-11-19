@@ -1,6 +1,6 @@
 import React from "react"
 
-class SeqInstrument extends React.Component {
+class SeqDrum extends React.Component {
 
 
   render() {
@@ -9,7 +9,7 @@ class SeqInstrument extends React.Component {
         {this.props.bars.map((bar, barIndex) => {
           return <td
             className={this.props.drumMatrix[this.props.drumIndex][barIndex] ?
-              "noteBox noteBox--active" : "noteBox"
+              "beatBox beatBox--active" : "beatBox"
             }
             key={barIndex}
             onClick={() => this.props.handleDrumClick(barIndex)}
@@ -21,4 +21,4 @@ class SeqInstrument extends React.Component {
 
 }
 
-export default SeqInstrument
+export default SeqDrum

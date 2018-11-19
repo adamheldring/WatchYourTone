@@ -5,6 +5,12 @@
   align-items: center;
 }
 
+
+.synth-container {
+  &:hover {
+    cursor: pointer;
+  }
+}
 .drums-container {
   display: flex;
   justify-content: center;
@@ -29,12 +35,23 @@
 
 .noteBox {
   background: lightgrey;
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 30px;
+  height: 20px;
+  // border-radius: 15px;
 
   &--active {
-    background: green;
+    background: orange;
+  }
+}
+
+.beatBox {
+  background: lightgrey;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+
+  &--active {
+    background: lightgreen;
   }
 }
 

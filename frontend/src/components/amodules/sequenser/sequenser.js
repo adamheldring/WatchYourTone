@@ -1,6 +1,6 @@
 import React from "react"
 import Tone from "tone"
-import SeqInstrument from "./seqInstrument"
+import SeqDrum from "./seqDrum"
 import SynthKey from "./synthKey"
 import "./sequenser.scss"
 
@@ -14,7 +14,9 @@ state = {
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
   ],
   drums: [
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
@@ -27,7 +29,7 @@ state = {
 
 componentDidMount() {
   Tone.Transport.cancel()
-  this.drumsGenerator()
+  this.soundGenerator()
   this.checkForActiveSession()
 }
 
@@ -43,19 +45,19 @@ checkForActiveSession = () => {
 }
 
 startPlaying = () => {
-  console.log('PLAYING')
+  console.log("PLAYING")
   Tone.Transport.start("+0.1")
-  this.setState({ playing: true })
+  // this.setState({ playing: true })
 }
 
 stopPlaying = () => {
-  console.log('STOPPED')
+  console.log("STOPPED")
   Tone.Transport.stop()
-  this.setState({ playing: false })
+  // this.setState({ playing: false })
 }
 
 handleDrumClick = (drumIndex, barIndex) => {
-  let newDrumMatrix = this.state.drums
+  const newDrumMatrix = this.state.drums
   newDrumMatrix[drumIndex][barIndex] = !this.state.drums[drumIndex][barIndex]
   this.setState({
     drums: newDrumMatrix
@@ -63,7 +65,7 @@ handleDrumClick = (drumIndex, barIndex) => {
 }
 
 handleNoteClick = (synthKeyIndex, barIndex) => {
-  let newSynthMatrix = this.state.synth
+  const newSynthMatrix = this.state.synth
   newSynthMatrix[synthKeyIndex][barIndex] = !this.state.synth[synthKeyIndex][barIndex]
   this.setState({
     synth: newSynthMatrix
@@ -77,9 +79,18 @@ handleBpmChange = e => {
     console.log("STATE bpm: ", this.state.bpm)
     console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
     Tone.Transport.bpm.value = this.state.bpm
-})}
+  })
+}
 
-drumsGenerator = () => {
+soundGenerator = () => {
+
+  const gain = new Tone.Gain(0.6)
+  gain.toMaster()
+
+  // --------------------//
+  //    DRUMS SECTION    //
+  // --------------------//
+
   const drums = [
     new Tone.MembraneSynth(),
     new Tone.PluckSynth(
@@ -104,14 +115,36 @@ drumsGenerator = () => {
       }
     )
   ]
+  drums.forEach(drum => drum.connect(gain))
 
   drums[0].oscillator.type = "sine"
   // drums[1].oscillator.type = "sawtooth"
   // drums[2].oscillator.type = "sine"
 
-  const gain = new Tone.Gain(0.6)
-  gain.toMaster()
+  // --------------------//
+  //    SYNTH SECTION    //
+  // --------------------//
 
+  const synths = []
+  for (let i = 0; i < this.state.synth[0].length; i++) {
+    synths.push(new Tone.Synth())
+  }
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  // new Tone.Synth(),
+  console.log("Synths: ", synths)
+
+  synths.forEach(synth => synth.connect(gain))
+
+
+  // --------------------//
+  //      FX SECTION     //
+  // --------------------//
 
   // FUTURE REVERBS AND FX SECTION
   // const freeverb = new Tone.Freeverb(0.02, 15000).toMaster();
@@ -122,16 +155,20 @@ drumsGenerator = () => {
 
     // gain.toMaster()
 
-
-  drums.forEach(drum => drum.connect(gain))
+  // -------------------- //
+  //  TRANSPORT SECTION   //
+  // -------------------- //
 
   let index = 0
+
+  const drumNotes = ["C1", "C2", "C4"]
+
+  const synthNotes = ["C5", "B4", "A4", "G4", "F4", "E4", "D4", "C4"]
 
   Tone.Transport.bpm.value = this.state.bpm
   Tone.Transport.scheduleRepeat(time => {
     let step = index % 16
     this.setState({ activeBar: step })
-    const notes = ["C1", "C2", "C4"]
     for (let i = 0; i < this.state.drums.length; i++) {
       if (this.state.drums[i][step]) {
         switch(i) {
@@ -142,17 +179,23 @@ drumsGenerator = () => {
             drums[i].triggerAttackRelease("16n", time, 0.6)
             break
           default:
-            drums[i].triggerAttackRelease(notes[i], "8n", time)
+            drums[i].triggerAttackRelease(drumNotes[i], "8n", time)
         }
       }
+    // }
+    for (let i = 0; i < this.state.synth.length; i++) {
+      if (this.state.synth[i][step]) {
+          synths[i].triggerAttackRelease(synthNotes[i], "8n", time)
+      }
     }
+  }
     index++
-  }, "8n")
+}, "8n")
 
 }
 
 render() {
-  const { synth, drums, activeBar, bpm } = this.state
+  const { blackKeys, synth, drums, activeBar, bpm } = this.state
   return (
     <div className="sequenser-container">
       <h3>SEQUENSER</h3>
@@ -196,7 +239,7 @@ render() {
           </thead>
           <tbody>
             {drums.map((drum, drumIndex) => {
-              return <SeqInstrument
+              return <SeqDrum
                 key={drumIndex}
                 drumIndex={drumIndex}
                 bars={drums[drumIndex]}
