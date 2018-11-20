@@ -1,4 +1,7 @@
 #!/bin/bash
 
+# remove recursive force
 rm -Rf ../backend/public
-cp build ../backend/test
+mv build ../backend/public
+
+echo Hello from build.sh

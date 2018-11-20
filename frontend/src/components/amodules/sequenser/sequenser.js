@@ -34,6 +34,18 @@ componentDidMount() {
   this.checkForActiveSession()
 }
 
+componentDidUpdate(prevProps, prevState) {
+  if (this.props.newSongLoaded) {
+    this.checkForActiveSession()
+    this.props.resetSongLoader()
+  }
+
+  if (this.state !== prevState) {
+    sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
+    sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
+  }
+}
+
 componentWillUnmount() {
   Tone.Transport.stop()
   sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
@@ -92,6 +104,13 @@ handleBpmChange = e => {
   })
 }
 
+changeWaveForm = e => {
+  console.log(e.target.value)
+  this.setState({
+    synthWaveForm: e.target.value
+  }, () => console.log("STATE waveform: ", this.state.synthWaveForm))
+}
+
 clearMatrix = () => {
   console.log("Cleared sequenser...")
   this.setState({
@@ -111,6 +130,9 @@ clearMatrix = () => {
       [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
     ]
   })
+  sessionStorage.removeItem("drums")
+  sessionStorage.removeItem("synth")
+
 }
 
 soundGenerator = () => {
@@ -253,10 +275,10 @@ soundGenerator = () => {
 }
 
 render() {
-  const { blackKeys, synth, drums, activeBar, bpm } = this.state
+  const { synth, drums, activeBar, bpm, synthWaveForm } = this.state
   return (
     <div className="sequenser-container">
-      <h3>SEQUENSER</h3>
+      <h3 className="section-heading">SEQUENSER</h3>
       <div className="synth-container">
         <table>
           <thead>
@@ -314,18 +336,75 @@ render() {
         <button onClick={this.stopPlaying}>STOP &#9632;</button>
         <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
         <button onClick={this.clearMatrix}>CLEAR</button>
-    </div>
-      <div className="meters">
-        <input
-          name="bpm"
-          type="range"
-          min="40"
-          max="300"
-          value={bpm}
-          onChange={this.handleBpmChange}
-          />
-        <label htmlFor="bpm">{this.state.bpm} BPM</label>
       </div>
+
+      <section className="settings-container">
+        <h3 className="section-heading">SETTINGS</h3>
+        <div className="meters">
+          <input
+            name="bpm"
+            type="range"
+            min="40"
+            max="300"
+            value={bpm}
+            onChange={this.handleBpmChange}
+            />
+          <label htmlFor="bpm">{this.state.bpm} BPM</label>
+        </div>
+
+        <div className="waveFormSetting-container">
+          <label className="radio-button-container" htmlFor="triangle">
+            Triangle
+            <input
+              type="radio"
+              id="triangle"
+              name="triangle"
+              value="triangle"
+              onChange={this.changeWaveForm}
+              checked={synthWaveForm === "triangle"} />
+            <span className="custom-radio-button" />
+          </label>
+          <br />
+          <label className="radio-button-container" htmlFor="square">
+            Square
+            <input
+              type="radio"
+              id="square"
+              name="square"
+              value="square"
+              onChange={this.changeWaveForm}
+              checked={synthWaveForm === "square"} />
+            <span className="custom-radio-button" />
+          </label>
+          <br />
+          <label className="radio-button-container" htmlFor="sawtooth">
+            Sawtooth
+            <input
+              type="radio"
+              id="sawtooth"
+              name="sawtooth"
+              value="sawtooth"
+              onChange={this.changeWaveForm}
+              checked={synthWaveForm === "sawtooth"} />
+            <span className="custom-radio-button" />
+          </label>
+          <br />
+          <label className="radio-button-container" htmlFor="sine">
+            Sine
+            <input
+              type="radio"
+              id="sine"
+              name="sine"
+              value="sine"
+              onChange={this.changeWaveForm}
+              checked={synthWaveForm === "sine"} />
+            <span className="custom-radio-button" />
+          </label>
+          <br />
+
+        </div>
+      </section>
+
     </div>
   )
 }

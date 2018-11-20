@@ -1,7 +1,7 @@
 import React from "react"
-import "./saveLoadPage.scss"
+import "./saveLoad.scss"
 import { WYT_SERVER_URL } from "../../constants"
-class SaveLoadPage extends React.Component {
+class SaveLoad extends React.Component {
 
 state = {
   songTitle: "",
@@ -100,20 +100,21 @@ submitLoad = e => {
       .then(loadedSong => {
         this.setState({
           loadedSong
-        }, () => this.loadSongToSequenser())
+        }, () => this.loadSongToStorage())
       })
 
     // CREATE MESSAGE (Are you sure, do you wnat to save song first?)
   }
 }
 
-loadSongToSequenser = () => {
+loadSongToStorage = () => {
   const { loadedSong } = this.state
   console.log("NEWLY LOADED SONG: ", loadedSong)
   console.table(JSON.parse(loadedSong.drums))
   console.table(JSON.parse(loadedSong.synth))
   sessionStorage.setItem("drums", loadedSong.drums)
   sessionStorage.setItem("synth", loadedSong.synth)
+  this.props.loadNewSong(true)
 }
 
 
@@ -156,4 +157,4 @@ render() {
 
 }
 
-export default SaveLoadPage
+export default SaveLoad
