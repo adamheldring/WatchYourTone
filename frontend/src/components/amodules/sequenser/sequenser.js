@@ -23,7 +23,8 @@ state = {
     [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
   ],
   activeBar: 0,
-  bpm: 120,
+  resetTransport: false,
+  bpm: 140,
   synthWaveForm: "triangle"
 }
 
@@ -50,7 +51,7 @@ checkForActiveSession = () => {
 
 startPlaying = () => {
   console.log("PLAYING")
-  Tone.Transport.start("+0.1")
+  Tone.Transport.start("+0.2")
   // this.setState({ playing: true })
 }
 
@@ -58,6 +59,11 @@ stopPlaying = () => {
   console.log("STOPPED")
   Tone.Transport.stop()
   // this.setState({ playing: false })
+}
+
+rewindPlaying = () => {
+  console.log("Rewind")
+  this.setState({ resetTransport: true, activeBar: 0 })
 }
 
 handleDrumClick = (drumIndex, barIndex) => {
@@ -82,7 +88,28 @@ handleBpmChange = e => {
   }, () => {
     console.log("STATE bpm: ", this.state.bpm)
     console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
-    Tone.Transport.bpm.value = this.state.bpm
+    Tone.Transport.bpm.rampTo(this.state.bpm, 0.2)
+  })
+}
+
+clearMatrix = () => {
+  console.log("Cleared sequenser...")
+  this.setState({
+    synth: [
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    ],
+    drums: [
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    ]
   })
 }
 
@@ -101,13 +128,17 @@ soundGenerator = () => {
 
   const drums = [
     new Tone.MembraneSynth(),
-    new Tone.PluckSynth(
-      {
-        attackNoise: 2,
-        dampening: 4000,
-        resonance: 0.45
+    new Tone.NoiseSynth({
+      noise: {
+        type: "white"
+      },
+      envelope: {
+        attack: 0.001,
+        decay: 0.15,
+        sustain: 0.05,
+        release: 0.2
       }
-    ),
+    }),
     new Tone.MetalSynth(
       {
         frequency: 200,
@@ -123,6 +154,18 @@ soundGenerator = () => {
       }
     )
   ]
+
+  // OLD SNARE V1
+  // new Tone.PluckSynth(
+  //   {
+  //     attackNoise: 2,
+  //     dampening: 4000,
+  //     resonance: 0.45
+  //   }
+  // ),
+  // drums[i].triggerAttackRelease("C2", "16n", time)
+
+
   drums.forEach(drum => drum.connect(gain))
 
   drums[0].oscillator.type = "sine"
@@ -175,14 +218,19 @@ soundGenerator = () => {
   const synthNotes = ["C5", "B4", "A4", "G4", "F4", "E4", "D4", "C4"]
 
   Tone.Transport.bpm.value = this.state.bpm
+  Tone.context.latencyHint = "fastest"
   Tone.Transport.scheduleRepeat(time => {
+    if (this.state.resetTransport) {
+      index = 0
+      this.setState({ resetTransport: false, activeBar: 0 })
+    }
     let step = index % 16
     this.setState({ activeBar: step })
     for (let i = 0; i < this.state.drums.length; i++) {
       if (this.state.drums[i][step]) {
         switch(i) {
           case 1:
-            drums[i].triggerAttackRelease("C2", "16n", time)
+            drums[i].triggerAttackRelease("16n")
             break
           case 2:
             drums[i].triggerAttackRelease("16n", time, 0.6)
@@ -199,7 +247,7 @@ soundGenerator = () => {
       }
     }
   }
-    index++
+  index++
 }, "8n")
 
 }
@@ -262,9 +310,11 @@ render() {
       </div>
 
       <div>
-        <button onClick={this.startPlaying}>PLAY</button>
-        <button onClick={this.stopPlaying}>STOP</button>
-      </div>
+        <button onClick={this.startPlaying}>PLAY &#9654;</button>
+        <button onClick={this.stopPlaying}>STOP &#9632;</button>
+        <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
+        <button onClick={this.clearMatrix}>CLEAR</button>
+    </div>
       <div className="meters">
         <input
           name="bpm"
