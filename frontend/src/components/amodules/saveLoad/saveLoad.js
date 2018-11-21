@@ -110,14 +110,18 @@ loadSongToStorage = () => {
   console.table(JSON.parse(loadedSong.synth))
   console.log(loadedSong.bpm)
   console.log(loadedSong.waveform)
+  console.log(loadedSong.songTitle)
+  console.log(loadedSong.composer)
 
   sessionStorage.setItem("drums", loadedSong.drums)
   sessionStorage.setItem("synth", loadedSong.synth)
   sessionStorage.setItem("bpm", loadedSong.bpm)
   sessionStorage.setItem("waveform", loadedSong.waveform)
+  sessionStorage.setItem("loadedSongTitle", loadedSong.songTitle)
+  sessionStorage.setItem("loadedSongComposer", loadedSong.composer)
+
   this.props.loadNewSong(true)
 }
-
 
 render() {
   const { songTitle, composer, songList } = this.state

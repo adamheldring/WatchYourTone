@@ -57,3 +57,7 @@ export const DEFAULT_BPM = 140
 
 // DEFAULT SYNTH WAVEFORM
 export const DEFAULT_WAVEFORM = "triangle"
+
+export const DEFAULT_SONG_TITLE = "New masterpiece"
+
+export const DEFAULT_COMPOSER = "You"

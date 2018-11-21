@@ -5,7 +5,7 @@ import DrumsModule from "./drumsModule"
 import SeqDrum from "./seqDrum"
 import Settings from "../settings/settings"
 import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS,
-  SYNTH_NOTES, DEFAULT_BPM, DEFAULT_WAVEFORM } from "../../constants"
+  SYNTH_NOTES, DEFAULT_BPM, DEFAULT_WAVEFORM, DEFAULT_SONG_TITLE, DEFAULT_COMPOSER } from "../../constants"
 import "./sequenser.scss"
 
 class Sequenser extends React.Component {
@@ -13,11 +13,12 @@ class Sequenser extends React.Component {
 state = {
   synth: EMPTY_SYNTH_MATRIX,
   drums: EMPTY_DRUM_MATRIX,
-
   activeBar: 0,
   resetTransport: false,
   bpm: 140,
-  synthWaveForm: "triangle"
+  synthWaveForm: "triangle",
+  loadedSongTitle: DEFAULT_SONG_TITLE,
+  loadedSongComposer: DEFAULT_COMPOSER
 }
 
 componentDidMount() {
@@ -49,7 +50,9 @@ checkForActiveSession = () => {
       drums: JSON.parse(sessionStorage.getItem("drums")),
       synth: JSON.parse(sessionStorage.getItem("synth")),
       bpm: sessionStorage.getItem("bpm"),
-      synthWaveForm: sessionStorage.getItem("waveform")
+      synthWaveForm: sessionStorage.getItem("waveform"),
+      loadedSongTitle: sessionStorage.getItem("loadedSongTitle"),
+      loadedSongComposer: sessionStorage.getItem("loadedSongComposer")
     })
   }
 }
@@ -108,12 +111,16 @@ clearMatrix = () => {
     synth: EMPTY_SYNTH_MATRIX,
     drums: EMPTY_DRUM_MATRIX,
     bpm: DEFAULT_BPM,
-    synthWaveForm: DEFAULT_WAVEFORM
+    synthWaveForm: DEFAULT_WAVEFORM,
+    loadedSongTitle: DEFAULT_SONG_TITLE,
+    loadedSongComposer: DEFAULT_COMPOSER
   })
   sessionStorage.removeItem("drums")
   sessionStorage.removeItem("synth")
   sessionStorage.removeItem("bpm")
   sessionStorage.removeItem("waveform")
+  sessionStorage.removeItem("loadedSongTitle")
+  sessionStorage.removeItem("loadedSongComposer")
 }
 
 soundGenerator = () => {
@@ -204,11 +211,15 @@ soundGenerator = () => {
 }
 
 render() {
-  const { synth, drums, activeBar, bpm, synthWaveForm } = this.state
+  const { synth, drums, activeBar, bpm, synthWaveForm, loadedSongTitle, loadedSongComposer } = this.state
   return (
 
     <div className="sequenser-container">
       <h3 className="section-heading">SEQUENSER</h3>
+      <div className="songDetails-container">
+        <h2 className="songDetails">{`"${loadedSongTitle}"`}</h2>
+        <h3 className="songDetails">BY {loadedSongComposer}</h3>
+      </div>
 
       <SynthModule
         synth={synth}
