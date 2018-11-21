@@ -42,9 +42,15 @@
   width: 30px;
   height: 20px;
   // border-radius: 15px;
-
+  &:hover {
+    // background: #f5f7b2;
+    background: #f4f4cd;
+  }
   &--active {
-    background: orange;
+    background: #FFA400;
+    &:hover {
+      background: #fcd797;
+    }
   }
 }
 
@@ -53,9 +59,14 @@
   width: 30px;
   height: 30px;
   border-radius: 15px;
-
+  &:hover {
+    background: #f5f7b2;
+  }
   &--active {
     background: lightgreen;
+    &:hover {
+      background: #c9fcca;
+    }
   }
 }
 

@@ -2,26 +2,14 @@ import React from "react"
 import Tone from "tone"
 import SeqDrum from "./seqDrum"
 import SynthKey from "./synthKey"
+import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS, SYNTH_NOTES } from "../../constants"
 import "./sequenser.scss"
 
 class Sequenser extends React.Component {
 
 state = {
-  synth: [
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  ],
-  drums: [
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-    [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-  ],
+  synth: EMPTY_SYNTH_MATRIX,
+  drums: EMPTY_DRUM_MATRIX,
   activeBar: 0,
   resetTransport: false,
   bpm: 140,
@@ -64,13 +52,11 @@ checkForActiveSession = () => {
 startPlaying = () => {
   console.log("PLAYING")
   Tone.Transport.start("+0.2")
-  // this.setState({ playing: true })
 }
 
 stopPlaying = () => {
   console.log("STOPPED")
   Tone.Transport.stop()
-  // this.setState({ playing: false })
 }
 
 rewindPlaying = () => {
@@ -114,35 +100,25 @@ changeWaveForm = e => {
 clearMatrix = () => {
   console.log("Cleared sequenser...")
   this.setState({
-    synth: [
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    ],
-    drums: [
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    ]
+    synth: EMPTY_SYNTH_MATRIX,
+    drums: EMPTY_DRUM_MATRIX
   })
   sessionStorage.removeItem("drums")
   sessionStorage.removeItem("synth")
-
 }
 
 soundGenerator = () => {
+  // ---------------------- //
+  //   MASTER & FX SECTION  //
+  // ---------------------- //
 
-  // FUTURE REVERBS AND FX SECTION
+  Tone.Transport.bpm.value = this.state.bpm
+  Tone.context.latencyHint = "fastest"
+
+  // SIGNAL CHAIN: Source(Sequenser) -> Gain -> Reverb -> Master(Speakers)
   const freeverb = new Tone.Freeverb(0.05, 15000).toMaster()
   const gain = new Tone.Gain(0.6)
   gain.connect(freeverb)
-
-  // gain.toMaster()
 
   // --------------------//
   //    DRUMS SECTION    //
@@ -150,128 +126,72 @@ soundGenerator = () => {
 
   const drums = [
     new Tone.MembraneSynth(),
-    new Tone.NoiseSynth({
-      noise: {
-        type: "white"
-      },
-      envelope: {
-        attack: 0.001,
-        decay: 0.15,
-        sustain: 0.05,
-        release: 0.2
-      }
-    }),
-    new Tone.MetalSynth(
-      {
-        frequency: 200,
-        envelope: {
-          attack: 0.001,
-          decay: 0.05,
-          release: 0.05
-        },
-        harmonicity: 5.1,
-        modulationIndex: 32,
-        resonance: 4000,
-        octaves: 1.5
-      }
-    )
+    new Tone.NoiseSynth(SNARE_DRUM_SETTINGS),
+    new Tone.MetalSynth(HIHAT_DRUM_SETTINGS)
   ]
-
-  // OLD SNARE V1
-  // new Tone.PluckSynth(
-  //   {
-  //     attackNoise: 2,
-  //     dampening: 4000,
-  //     resonance: 0.45
-  //   }
-  // ),
-  // drums[i].triggerAttackRelease("C2", "16n", time)
-
-
   drums.forEach(drum => drum.connect(gain))
-
-  drums[0].oscillator.type = "sine"
-  // drums[1].oscillator.type = "sawtooth"
-  // drums[2].oscillator.type = "sine"
 
   // --------------------//
   //    SYNTH SECTION    //
   // --------------------//
 
   const synths = []
-  for (let i = 0; i < this.state.synth[0].length; i++) {
+  this.state.synth.forEach((synth, i) => (
     synths.push(new Tone.Synth())
-    // synths[i].oscillator.type = "triangle"
-  }
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  // new Tone.Synth(),
-  console.log("Synths: ", synths)
-
+  ))
   synths.forEach(synth => synth.connect(gain))
-
-
-  // --------------------//
-  //      FX SECTION     //
-  // --------------------//
-
-  // FUTURE REVERBS AND FX SECTION
-  // const freeverb = new Tone.Freeverb(0.02, 15000).toMaster();
-  // gain.connect(freeverb)
-
-  // const jcReverb = new Tone.JCReverb(0.02).toMaster();
-  // gain.connect(jcReverb)
-
-    // gain.toMaster()
 
   // -------------------- //
   //  TRANSPORT SECTION   //
   // -------------------- //
 
-  let index = 0
+  let transportIndex = 0
 
-  const drumNotes = ["C1", "C2", "C4"]
-
-  const synthNotes = ["C5", "B4", "A4", "G4", "F4", "E4", "D4", "C4"]
-
-  Tone.Transport.bpm.value = this.state.bpm
-  Tone.context.latencyHint = "fastest"
+  // RUN LOOP
   Tone.Transport.scheduleRepeat(time => {
     if (this.state.resetTransport) {
-      index = 0
+      transportIndex = 0
       this.setState({ resetTransport: false, activeBar: 0 })
     }
-    let step = index % 16
+    const step = transportIndex % 16
     this.setState({ activeBar: step })
-    for (let i = 0; i < this.state.drums.length; i++) {
-      if (this.state.drums[i][step]) {
-        switch(i) {
-          case 1:
-            drums[i].triggerAttackRelease("16n")
-            break
-          case 2:
-            drums[i].triggerAttackRelease("16n", time, 0.6)
-            break
+
+    // UPDATE SYNTH WAVEFORM IF USER SWITCHED SETTING
+    if (synths[0].oscillator.type !== this.state.synthWaveForm) {
+      const setNewWaveFrom = synths.map(synth => {
+        return new Promise(resolve => {
+          synth.oscillator.type = this.state.synthWaveForm
+          resolve()
+        })
+      })
+      Promise.all(setNewWaveFrom).then(
+        console.log("All synths updated to new waveform...")
+      )
+    }
+
+    // GENERATE USER'S SYNTH NOTES
+    synths.forEach((synth, synthIndex) => {
+      if (this.state.synth[synthIndex][step]) {
+        synth.triggerAttackRelease(SYNTH_NOTES[synthIndex], "8n", time)
+      }
+    })
+
+    // GENERATE USER'S DRUM BEATS
+    drums.forEach((drum, drumIndex) => {
+      if (this.state.drums[drumIndex][step]) {
+        switch (drumIndex) {
           default:
-            drums[i].triggerAttackRelease(drumNotes[i], "8n", time)
+            drums[drumIndex].triggerAttackRelease("C1", "8n", time); break
+          case 1:
+            drums[drumIndex].triggerAttackRelease("16n"); break
+          case 2:
+            drums[drumIndex].triggerAttackRelease("16n", time, 0.6); break
         }
       }
-    // }
-    for (let i = 0; i < this.state.synth.length; i++) {
-      if (this.state.synth[i][step]) {
-          synths[i].oscillator.type = this.state.synthWaveForm
-          synths[i].triggerAttackRelease(synthNotes[i], "8n", time)
-      }
-    }
-  }
-  index++
-}, "8n")
+    })
 
+    transportIndex++
+  }, "8n")
 }
 
 render() {
