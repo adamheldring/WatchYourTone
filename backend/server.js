@@ -29,7 +29,9 @@ const Song = mongoose.model("Song", {
   songTitle: String,
   composer: String,
   drums: String,
-  synth: String
+  synth: String,
+  bpm: Number,
+  waveform: String
 })
 
 app.get("/", (req, res) => {

@@ -12,16 +12,13 @@ state = {
 }
 
 componentDidMount() {
-  // Load songlist from database to display in latest field
+  // Load songlist from database to display in song field
   this.loadSongList()
 }
 
 loadSongList() {
   console.log("Loading saved songlist...")
   console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
-
-  // BEFORE HEROKU
-  // fetch("http://localhost:8080/songs/")
 
   fetch(`${WYT_SERVER_URL}/songs/`)
     .then(response => response.json())
@@ -55,12 +52,11 @@ submitSave = e => {
     songTitle,
     composer,
     drums: sessionStorage.getItem("drums"),
-    synth: sessionStorage.getItem("synth")
+    synth: sessionStorage.getItem("synth"),
+    bpm: sessionStorage.getItem("bpm"),
+    waveform: sessionStorage.getItem("waveform")
   }
   console.log(newSong)
-
-  // BEFORE HEROKU
-  // fetch("http://localhost:8080/songs/", {
 
   console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
   fetch(`${WYT_SERVER_URL}/songs/`, {
@@ -89,18 +85,18 @@ submitLoad = e => {
   } else {
     console.log(`Loading song with id: ${songToLoad}...`)
 
-    const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
+    // const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
     console.log(`TEST: ${WYT_SERVER_URL}/songs/${songToLoad}`)
-
-    // BEFORE HEROKU
-    // fetch(`http://localhost:8080/songs/${songToLoad}`)
 
     fetch(`${WYT_SERVER_URL}/songs/${songToLoad}`)
       .then(response => response.json())
       .then(loadedSong => {
         this.setState({
           loadedSong
-        }, () => this.loadSongToStorage())
+        }, () => {
+          this.loadSongToStorage()
+          console.log(this.state)
+        })
       })
 
     // CREATE MESSAGE (Are you sure, do you wnat to save song first?)
@@ -112,8 +108,13 @@ loadSongToStorage = () => {
   console.log("NEWLY LOADED SONG: ", loadedSong)
   console.table(JSON.parse(loadedSong.drums))
   console.table(JSON.parse(loadedSong.synth))
+  console.log(loadedSong.bpm)
+  console.log(loadedSong.waveform)
+
   sessionStorage.setItem("drums", loadedSong.drums)
   sessionStorage.setItem("synth", loadedSong.synth)
+  sessionStorage.setItem("bpm", loadedSong.bpm)
+  sessionStorage.setItem("waveform", loadedSong.waveform)
   this.props.loadNewSong(true)
 }
 

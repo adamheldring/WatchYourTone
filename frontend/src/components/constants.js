@@ -51,3 +51,9 @@ export const HIHAT_DRUM_SETTINGS = {
 
 // SYNTH NOTES - C major scale
 export const SYNTH_NOTES = ["C5", "B4", "A4", "G4", "F4", "E4", "D4", "C4"]
+
+// DEFAULT SEQUENSER BPM
+export const DEFAULT_BPM = 140
+
+// DEFAULT SYNTH WAVEFORM
+export const DEFAULT_WAVEFORM = "triangle"

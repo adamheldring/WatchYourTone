@@ -1,10 +1,11 @@
 import React from "react"
 import Tone from "tone"
 import SynthModule from "./synthModule"
+import DrumsModule from "./drumsModule"
 import SeqDrum from "./seqDrum"
-import SynthKey from "./synthKey"
 import Settings from "../settings/settings"
-import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS, SYNTH_NOTES } from "../../constants"
+import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS,
+  SYNTH_NOTES, DEFAULT_BPM, DEFAULT_WAVEFORM } from "../../constants"
 import "./sequenser.scss"
 
 class Sequenser extends React.Component {
@@ -12,6 +13,7 @@ class Sequenser extends React.Component {
 state = {
   synth: EMPTY_SYNTH_MATRIX,
   drums: EMPTY_DRUM_MATRIX,
+
   activeBar: 0,
   resetTransport: false,
   bpm: 140,
@@ -32,20 +34,22 @@ componentDidUpdate(prevProps, prevState) {
   if (this.state !== prevState) {
     sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
     sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
+    sessionStorage.setItem("bpm", this.state.bpm)
+    sessionStorage.setItem("waveform", this.state.synthWaveForm)
   }
 }
 
 componentWillUnmount() {
   Tone.Transport.stop()
-  sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
-  sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
 }
 
 checkForActiveSession = () => {
   if (sessionStorage.getItem("drums")) {
     this.setState({
       drums: JSON.parse(sessionStorage.getItem("drums")),
-      synth: JSON.parse(sessionStorage.getItem("synth"))
+      synth: JSON.parse(sessionStorage.getItem("synth")),
+      bpm: sessionStorage.getItem("bpm"),
+      synthWaveForm: sessionStorage.getItem("waveform")
     })
   }
 }
@@ -102,10 +106,14 @@ clearMatrix = () => {
   console.log("Cleared sequenser...")
   this.setState({
     synth: EMPTY_SYNTH_MATRIX,
-    drums: EMPTY_DRUM_MATRIX
+    drums: EMPTY_DRUM_MATRIX,
+    bpm: DEFAULT_BPM,
+    synthWaveForm: DEFAULT_WAVEFORM
   })
   sessionStorage.removeItem("drums")
   sessionStorage.removeItem("synth")
+  sessionStorage.removeItem("bpm")
+  sessionStorage.removeItem("waveform")
 }
 
 soundGenerator = () => {
@@ -207,33 +215,13 @@ render() {
         activeBar={activeBar}
         handleNoteClick={(synthKeyIndex, barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)} />
 
-      <div className="drums-container">
-        <table>
-          <thead>
-            <tr>
-              {drums[0].map((bars, index) => {
-                return <th key={index} className={(index === activeBar) ?
-                  "barIndicator barIndicator--active" :
-                  "barIndicator"
-                }>{index + 1}</th>
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {drums.map((drum, drumIndex) => {
-              return <SeqDrum
-                key={drumIndex}
-                drumIndex={drumIndex}
-                bars={drums[drumIndex]}
-                drumMatrix={drums}
-                handleDrumClick={(barIndex) => this.handleDrumClick(drumIndex, barIndex)}
-              />
-            })}
-            </tbody>
-        </table>
-      </div>
+      <DrumsModule
+        drums={drums}
+        activeBar={activeBar}
+        handleDrumClick={(drumIndex, barIndex) => this.handleDrumClick(drumIndex, barIndex)}
+        />
 
-      <div>
+      <div className="transportControls">
         <button onClick={this.startPlaying}>PLAY &#9654;</button>
         <button onClick={this.stopPlaying}>STOP &#9632;</button>
         <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
