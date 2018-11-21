@@ -1,5 +1,6 @@
 import React from "react"
 import Tone from "tone"
+import SynthModule from "./synthModule"
 import SeqDrum from "./seqDrum"
 import SynthKey from "./synthKey"
 import Settings from "../settings/settings"
@@ -28,7 +29,6 @@ componentDidUpdate(prevProps, prevState) {
     this.checkForActiveSession()
     this.props.resetSongLoader()
   }
-
   if (this.state !== prevState) {
     sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
     sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
@@ -198,33 +198,14 @@ soundGenerator = () => {
 render() {
   const { synth, drums, activeBar, bpm, synthWaveForm } = this.state
   return (
+
     <div className="sequenser-container">
       <h3 className="section-heading">SEQUENSER</h3>
-      <div className="synth-container">
-        <table>
-          <thead>
-            <tr>
-              {synth[0].map((bars, index) => {
-                return <th key={index} className={(index === activeBar) ?
-                  "barIndicator barIndicator--active" :
-                  "barIndicator"
-                }>{index + 1}</th>
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {synth.map((synthKey, synthKeyIndex) => {
-              return <SynthKey
-                key={synthKeyIndex}
-                synthKeyIndex={synthKeyIndex}
-                bars={synth[synthKeyIndex]}
-                synthKeyMatrix={synth}
-                handleNoteClick={(barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)}
-              />
-            })}
-            </tbody>
-        </table>
-      </div>
+
+      <SynthModule
+        synth={synth}
+        activeBar={activeBar}
+        handleNoteClick={(synthKeyIndex, barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)} />
 
       <div className="drums-container">
         <table>
@@ -259,13 +240,12 @@ render() {
         <button onClick={this.clearMatrix}>CLEAR</button>
       </div>
 
-      // MAKE SETTINGS COMPONENT
       <Settings
         bpm={bpm}
         changeBpm={newBpm => this.handleBpmChange(newBpm)}
         synthWaveForm={synthWaveForm}
         changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)} />
-      
+
     </div>
   )
 }
