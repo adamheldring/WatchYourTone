@@ -68,7 +68,10 @@ submitSave = e => {
   })
     .then(data => {
       console.log("Request success: ", data)
+      sessionStorage.setItem("loadedSongTitle", songTitle)
+      sessionStorage.setItem("loadedSongComposer", composer)
       this.loadSongList()
+      this.props.loadNewSong(true)
       this.clearFields()
     })
     .catch(error => {

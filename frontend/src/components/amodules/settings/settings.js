@@ -1,4 +1,7 @@
 import React from "react"
+import "./settings.scss"
+import "./customRadioButtons.scss"
+import "./customRangeInput.scss"
 
 class Settings extends React.Component {
 
@@ -13,9 +16,10 @@ class Settings extends React.Component {
   }
 
   render() {
-    const { bpm, synthWaveForm } = this.props
+    const { bpm, synthWaveForm, loadedSongTitle, loadedSongComposer } = this.props
     return (
       <section className="settings-container">
+        <h2 className="composerPage-headline">SETTINGS</h2>
         <h3 className="section-heading">SETTINGS</h3>
         <div className="meters">
           <input
@@ -30,7 +34,8 @@ class Settings extends React.Component {
 
         <div className="waveFormSetting-container">
           <label className="radio-button-container" htmlFor="triangle">
-            Triangle
+            <img src="./assets/wf-triangle-small.png" className="waveform-image" alt="triangle-waveform" />
+            {" "}Triangle
             <input
               type="radio"
               id="triangle"
@@ -42,7 +47,8 @@ class Settings extends React.Component {
           </label>
           <br />
           <label className="radio-button-container" htmlFor="square">
-            Square
+            <img src="./assets/wf-square-small.png" className="waveform-image" alt="square-waveform" />
+            {" "}Square
             <input
               type="radio"
               id="square"
@@ -54,7 +60,8 @@ class Settings extends React.Component {
           </label>
           <br />
           <label className="radio-button-container" htmlFor="sawtooth">
-            Sawtooth
+            <img src="./assets/wf-sawtooth-small.png" className="waveform-image" alt="sawtooth-waveform" />
+            {" "}Sawtooth
             <input
               type="radio"
               id="sawtooth"
@@ -66,7 +73,8 @@ class Settings extends React.Component {
           </label>
           <br />
           <label className="radio-button-container" htmlFor="sine">
-            Sine
+            <img src="./assets/wf-sine-small.png" className="waveform-image" alt="sine-waveform" />
+            {" "}Sine
             <input
               type="radio"
               id="sine"
@@ -77,7 +85,10 @@ class Settings extends React.Component {
             <span className="custom-radio-button" />
           </label>
           <br />
-
+        </div>
+        <div className="songDetails-container">
+          <h2 className="songDetails">{`"${loadedSongTitle}"`}</h2>
+          <h3 className="songDetails">BY {loadedSongComposer}</h3>
         </div>
       </section>
     )

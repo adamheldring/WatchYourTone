@@ -25,7 +25,6 @@ resetSongLoader = () => {
 render() {
   return (
     <div className="page-wrapper page-wrapper--composerPage">
-      <h1 className="composerPage-headline">COMPOSE</h1>
       <Sequenser
         newSongLoaded={this.state.newSongLoaded}
         resetSongLoader={this.resetSongLoader} />

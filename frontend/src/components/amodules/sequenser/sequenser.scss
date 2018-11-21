@@ -1,3 +1,12 @@
+.musicMaker-wrapper {
+  // background: blue;
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
 .sequenser-container {
   // background: lightblue;
   display: flex;
@@ -55,6 +64,7 @@
   }
   &--active {
     background: #FFA400;
+    // background: #9090ee;
     &:hover {
       background: #fcd797;
     }
@@ -78,14 +88,14 @@
 }
 
 .meters {
-  background: lightblue;
+  // background: lightblue;
   margin: 10px;
   width: 400px;
 }
 
 .waveFormSetting-container {
   padding: 10px;
-  background: darkgrey;
+  // background: darkgrey;
 }
 
 .drumIcon {

@@ -2,7 +2,6 @@ import React from "react"
 import Tone from "tone"
 import SynthModule from "./synthModule"
 import DrumsModule from "./drumsModule"
-import SeqDrum from "./seqDrum"
 import Settings from "../settings/settings"
 import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS,
   SYNTH_NOTES, DEFAULT_BPM, DEFAULT_WAVEFORM, DEFAULT_SONG_TITLE, DEFAULT_COMPOSER } from "../../constants"
@@ -37,6 +36,8 @@ componentDidUpdate(prevProps, prevState) {
     sessionStorage.setItem("synth", JSON.stringify(this.state.synth))
     sessionStorage.setItem("bpm", this.state.bpm)
     sessionStorage.setItem("waveform", this.state.synthWaveForm)
+    sessionStorage.setItem("loadedSongTitle", this.state.loadedSongTitle)
+    sessionStorage.setItem("loadedSongComposer", this.state.loadedSongComposer)
   }
 }
 
@@ -108,13 +109,26 @@ changeWaveForm = newWaveForm => {
 clearMatrix = () => {
   console.log("Cleared sequenser...")
   this.setState({
-    synth: EMPTY_SYNTH_MATRIX,
-    drums: EMPTY_DRUM_MATRIX,
+    synth: [
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    ],
+    drums: [
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
+      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+    ],
     bpm: DEFAULT_BPM,
     synthWaveForm: DEFAULT_WAVEFORM,
     loadedSongTitle: DEFAULT_SONG_TITLE,
     loadedSongComposer: DEFAULT_COMPOSER
-  })
+  }, () => console.log("STATE RIGHT AFTER RESET: ", this.state))
   sessionStorage.removeItem("drums")
   sessionStorage.removeItem("synth")
   sessionStorage.removeItem("bpm")
@@ -211,40 +225,40 @@ soundGenerator = () => {
 }
 
 render() {
+
   const { synth, drums, activeBar, bpm, synthWaveForm, loadedSongTitle, loadedSongComposer } = this.state
   return (
 
-    <div className="sequenser-container">
-      <h3 className="section-heading">SEQUENSER</h3>
-      <div className="songDetails-container">
-        <h2 className="songDetails">{`"${loadedSongTitle}"`}</h2>
-        <h3 className="songDetails">BY {loadedSongComposer}</h3>
-      </div>
+    <div className="musicMaker-wrapper">
+      <section className="sequenser-container">
+        <h1 className="composerPage-headline">COMPOSE</h1>
+        <h3 className="section-heading">SEQUENSER</h3>
 
-      <SynthModule
-        synth={synth}
-        activeBar={activeBar}
-        handleNoteClick={(synthKeyIndex, barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)} />
+        <SynthModule
+          synth={synth}
+          activeBar={activeBar}
+          handleNoteClick={(synthKeyIndex, barIndex) => this.handleNoteClick(synthKeyIndex, barIndex)} />
 
-      <DrumsModule
-        drums={drums}
-        activeBar={activeBar}
-        handleDrumClick={(drumIndex, barIndex) => this.handleDrumClick(drumIndex, barIndex)}
-        />
+        <DrumsModule
+          drums={drums}
+          activeBar={activeBar}
+          handleDrumClick={(drumIndex, barIndex) => this.handleDrumClick(drumIndex, barIndex)}
+          />
 
-      <div className="transportControls">
-        <button onClick={this.startPlaying}>PLAY &#9654;</button>
-        <button onClick={this.stopPlaying}>STOP &#9632;</button>
-        <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
-        <button onClick={this.clearMatrix}>CLEAR &#9167;</button>
-      </div>
-
+        <div className="transportControls">
+          <button onClick={this.startPlaying}>PLAY &#9654;</button>
+          <button onClick={this.stopPlaying}>STOP &#9632;</button>
+          <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
+          <button onClick={this.clearMatrix}>CLEAR &#9167;</button>
+        </div>
+      </section>
       <Settings
         bpm={bpm}
         changeBpm={newBpm => this.handleBpmChange(newBpm)}
         synthWaveForm={synthWaveForm}
-        changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)} />
-
+        changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)}
+        loadedSongTitle={loadedSongTitle}
+        loadedSongComposer={loadedSongComposer} />
     </div>
   )
 }

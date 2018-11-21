@@ -1,0 +1,51 @@
+/* Section hiding standard radio buttons and replacing with styled bigger ones */
+.radio-button-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.radio-button-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.custom-radio-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #eeeeee;
+  border-radius: 50%;
+}
+.radio-button-container:hover input ~ .custom-radio-button {
+    background-color: #45B69C;
+}
+.radio-button-container input:checked ~ .custom-radio-button {
+    background-color: #7293A0;
+}
+.custom-radio-button:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+.radio-button-container input:checked ~ .custom-radio-button:after {
+  display: block;
+}
+.radio-button-container .custom-radio-button:after {
+ 	top: 9px;
+	left: 9px;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #fff;
+}
