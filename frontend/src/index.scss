@@ -1,4 +1,11 @@
+@font-face {
+  font-family: "Retro";
+  src: url("./fonts/retro/unscii-16-webfont.woff");
+  src: url("./fonts/retro/unscii-16-webfont.woff2");
+}
+
 .body {
+  font-family: "Retro";
   margin: 0;
   padding: 0;
   font-family: sans-serif;
@@ -7,4 +14,23 @@
 
 .page-wrapper {
   // background: pink;
+}
+
+.tableRowExplainer {
+  min-height: 22px;
+  color: #FFF;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--bars {
+    background: none;
+  }
+  &--synth {
+    // background: blue;
+  }
+  &--drums {
+    // background: yellow;
+  }
 }

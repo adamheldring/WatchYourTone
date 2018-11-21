@@ -236,7 +236,7 @@ render() {
         <button onClick={this.startPlaying}>PLAY &#9654;</button>
         <button onClick={this.stopPlaying}>STOP &#9632;</button>
         <button onClick={this.rewindPlaying}>REWIND &#9664;&#9664;</button>
-        <button onClick={this.clearMatrix}>CLEAR</button>
+        <button onClick={this.clearMatrix}>CLEAR &#9167;</button>
       </div>
 
       <Settings

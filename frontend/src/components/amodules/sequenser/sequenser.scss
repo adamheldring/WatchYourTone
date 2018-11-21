@@ -6,6 +6,7 @@
 }
 
 .section-heading {
+  font-family: "Retro";
   color: #FFF;
   margin-top: 30px;
 }
@@ -16,14 +17,15 @@
   color: orange;
 }
 .synth-container {
+  margin-right: 30px;
   &:hover {
     cursor: pointer;
   }
 }
 .drums-container {
+  margin-right: 30px;
   display: flex;
   justify-content: center;
-  margin: auto;
 
   &:hover {
     cursor: pointer;
@@ -84,4 +86,8 @@
 .waveFormSetting-container {
   padding: 10px;
   background: darkgrey;
+}
+
+.drumIcon {
+  width: 30px;
 }

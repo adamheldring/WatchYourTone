@@ -61,3 +61,27 @@ export const DEFAULT_WAVEFORM = "triangle"
 export const DEFAULT_SONG_TITLE = "New masterpiece"
 
 export const DEFAULT_COMPOSER = "You"
+
+export const DRUM_ICONS = [
+  "./assets/kick-100-inv.png",
+  "./assets/snare-100-inv.png",
+  "./assets/hihat-100-inv.png"
+]
+
+// TURQUOISE TO PINK
+// 16 STEP COLOR GRADIENT YELLOW TO ORANGE FOR TRANSPORT BAR
+export const COLOR_GRADIENT = [
+"6BFFE9", "74F5EA", "7DECEB", "86E3ED",
+"8FDAEE", "98D1F0", "A1C8F1", "AABFF2",
+"B3B5F4", "BCACF5", "C5A3F7", "CE9AF8",
+"D791F9", "E088FB", "E97FFC", "F276FE"
+]
+
+// YELLOW TO ORANGE
+// 16 STEP COLOR GRADIENT FOR TRANSPORT BAR
+// export const COLOR_GRADIENT = [
+//   "FFF96B", "FEF264", "FDEB5E", "FDE468",
+//   "FCDD52", "FBD64C", "FBCF46", "FAC840",
+//   "F9C139", "F9BA33", "F8B32D", "F7AC27",
+//   "F7A521", "F69E1B", "F59715", "F5910F"
+// ]

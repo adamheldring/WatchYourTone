@@ -8,11 +8,11 @@ class Header extends React.Component {
     return (
       <div className="header-container">
         <h2>WATCH YOUR TONE</h2>
-        <nav className="nav-container">
+{/*        <nav className="nav-container">
           <Link to="/" className="menuItem">COMPOSE</Link>
           <Link to="/settings/" className="menuItem">SETTINGS</Link>
           <Link to="/saveload/" className="menuItem">SAVE/LOAD</Link>
-        </nav>
+        </nav> */}
       </div>
     )
   }
