@@ -1,7 +1,6 @@
 import React from "react"
 import Header from "../../header/header"
 import Sequenser from "../../amodules/sequenser/sequenser"
-// import Settings from "../../amodules/settings/settings"
 import SaveLoad from "../../amodules/saveLoad/saveLoad"
 
 import "./composerPage.scss"
