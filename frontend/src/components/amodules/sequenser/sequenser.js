@@ -2,6 +2,7 @@ import React from "react"
 import Tone from "tone"
 import SeqDrum from "./seqDrum"
 import SynthKey from "./synthKey"
+import Settings from "../settings/settings"
 import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS, SYNTH_NOTES } from "../../constants"
 import "./sequenser.scss"
 
@@ -80,9 +81,9 @@ handleNoteClick = (synthKeyIndex, barIndex) => {
   }, console.table(this.state.synth))
 }
 
-handleBpmChange = e => {
+handleBpmChange = newBpm => {
   this.setState({
-    bpm: e.target.value
+    bpm: newBpm
   }, () => {
     console.log("STATE bpm: ", this.state.bpm)
     console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
@@ -90,10 +91,10 @@ handleBpmChange = e => {
   })
 }
 
-changeWaveForm = e => {
-  console.log(e.target.value)
+changeWaveForm = newWaveForm => {
+  console.log(newWaveForm)
   this.setState({
-    synthWaveForm: e.target.value
+    synthWaveForm: newWaveForm
   }, () => console.log("STATE waveform: ", this.state.synthWaveForm))
 }
 
@@ -258,73 +259,13 @@ render() {
         <button onClick={this.clearMatrix}>CLEAR</button>
       </div>
 
-      <section className="settings-container">
-        <h3 className="section-heading">SETTINGS</h3>
-        <div className="meters">
-          <input
-            name="bpm"
-            type="range"
-            min="40"
-            max="300"
-            value={bpm}
-            onChange={this.handleBpmChange}
-            />
-          <label htmlFor="bpm">{this.state.bpm} BPM</label>
-        </div>
-
-        <div className="waveFormSetting-container">
-          <label className="radio-button-container" htmlFor="triangle">
-            Triangle
-            <input
-              type="radio"
-              id="triangle"
-              name="triangle"
-              value="triangle"
-              onChange={this.changeWaveForm}
-              checked={synthWaveForm === "triangle"} />
-            <span className="custom-radio-button" />
-          </label>
-          <br />
-          <label className="radio-button-container" htmlFor="square">
-            Square
-            <input
-              type="radio"
-              id="square"
-              name="square"
-              value="square"
-              onChange={this.changeWaveForm}
-              checked={synthWaveForm === "square"} />
-            <span className="custom-radio-button" />
-          </label>
-          <br />
-          <label className="radio-button-container" htmlFor="sawtooth">
-            Sawtooth
-            <input
-              type="radio"
-              id="sawtooth"
-              name="sawtooth"
-              value="sawtooth"
-              onChange={this.changeWaveForm}
-              checked={synthWaveForm === "sawtooth"} />
-            <span className="custom-radio-button" />
-          </label>
-          <br />
-          <label className="radio-button-container" htmlFor="sine">
-            Sine
-            <input
-              type="radio"
-              id="sine"
-              name="sine"
-              value="sine"
-              onChange={this.changeWaveForm}
-              checked={synthWaveForm === "sine"} />
-            <span className="custom-radio-button" />
-          </label>
-          <br />
-
-        </div>
-      </section>
-
+      // MAKE SETTINGS COMPONENT
+      <Settings
+        bpm={bpm}
+        changeBpm={newBpm => this.handleBpmChange(newBpm)}
+        synthWaveForm={synthWaveForm}
+        changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)} />
+      
     </div>
   )
 }

@@ -22,7 +22,7 @@ export const EMPTY_DRUM_MATRIX = [
   [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
 ]
 
-// NOISE SYNTH SETTINGS OBJECT –  Adam's snare drum sound
+// NOISE SYNTH SETTINGS OBJECT – Adam's snare drum sound
 export const SNARE_DRUM_SETTINGS = {
   noise: {
     type: "white"
@@ -35,7 +35,7 @@ export const SNARE_DRUM_SETTINGS = {
   }
 }
 
-// METAL SYNTH SETTINGS OBJECT –  Adam's hi-hat cymbal drum sound
+// METAL SYNTH SETTINGS OBJECT – Adam's hi-hat cymbal drum sound
 export const HIHAT_DRUM_SETTINGS = {
   frequency: 200,
   envelope: {
