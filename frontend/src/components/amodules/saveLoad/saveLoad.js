@@ -141,7 +141,7 @@ render() {
         <form id="postingForm" className="postingForm" onSubmit={this.submitSave}>
           <input className="formInput formInput__field" value={songTitle} type="text" placeholder="SONG TITLE" name="songTitle" required onChange={this.handleFormChange} />
           <input className="formInput formInput__field" value={composer} type="text" placeholder="COMPOSER NAME" name="composer" required onChange={this.handleFormChange} />
-          <input className="submitButton formInput__button" type="submit" value="Save" />
+          <input className="submitButton formInput__button formInput__button--save" type="submit" value="SAVE" />
         </form>
       </div>
 
@@ -162,7 +162,7 @@ render() {
                 >{`${song.songTitle.toUpperCase()} (${song.composer.toUpperCase()})`}</option>
             ))}
           </select>
-          <input className="submitButton formInput__button" type="submit" value="Load" />
+          <input className="submitButton formInput__button formInput__button--load" type="submit" value="LOAD" />
         </form>– 
       </div>
 

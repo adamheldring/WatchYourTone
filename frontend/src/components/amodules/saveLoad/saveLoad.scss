@@ -37,11 +37,40 @@
   &__button {
     width: 100%;
     margin: 5px 0;
+    font-family: "Retro", sans-serif;
+    color: #272727;
+    font-size: 15px;
+    background: lightgrey;
+    &:hover {
+      background: #55cced;
+      color: #FFF;
+    }
+    &:active {
+      background: #396C99;
+      color: #FFF;
+    }
+
+    &--save {
+      position: absolute;
+      top: 53px;
+      left: 89px;
+      border: none;
+      width: 115px;
+      height: 30px;
+      border-radius: 5px;
+    }
+    &--load {
+      position: absolute;
+      top: 53px;
+      left: -67px;
+      border: none;
+      width: 115px;
+      height: 30px;
+      border-radius: 5px;
+    }
   }
 
   &__select {
-    // width: 130px;
-    // margin: 5px 0;
     font-family: "Retro", sans-serif;
     font-size: 20px;
     margin: 5px 0;
@@ -54,16 +83,17 @@
 }
 
 .saveForm-container {
+  position: relative;
   margin-top: 40px;
   margin-right: 110px;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  // background: pink;
 }
 
 .loadForm-container {
+  position: relative;
   margin-top: 40px;
   margin-right: 120px;
   display: flex;
@@ -72,6 +102,4 @@
   align-items: flex-start;
   padding: 0 10px;
   width: 400px;
-  // align-items: center;
-  // background: lightgrey;
 }
