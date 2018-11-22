@@ -129,7 +129,7 @@ loadSongToStorage = () => {
 render() {
   const { songTitle, composer, songList } = this.state
   return (
-    <div className="page-wrapper page-wrapper--saveLoadPage">
+    <div className="page-wrapper page-wrapper--saveLoad">
       <h2 className="composerPage-headline">SAVE & LOAD</h2>
       <div className="saveForm-container">
         <h2>SAVE SONG</h2>

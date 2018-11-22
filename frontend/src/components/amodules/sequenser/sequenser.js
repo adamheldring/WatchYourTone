@@ -10,8 +10,8 @@ import "./sequenser.scss"
 class Sequenser extends React.Component {
 
 state = {
-  synth: EMPTY_SYNTH_MATRIX,
-  drums: EMPTY_DRUM_MATRIX,
+  synth: EMPTY_SYNTH_MATRIX(),
+  drums: EMPTY_DRUM_MATRIX(),
   activeBar: 0,
   resetTransport: false,
   bpm: 140,
@@ -46,15 +46,19 @@ componentWillUnmount() {
 }
 
 checkForActiveSession = () => {
-  if (sessionStorage.getItem("drums")) {
-    this.setState({
-      drums: JSON.parse(sessionStorage.getItem("drums")),
-      synth: JSON.parse(sessionStorage.getItem("synth")),
-      bpm: sessionStorage.getItem("bpm"),
-      synthWaveForm: sessionStorage.getItem("waveform"),
-      loadedSongTitle: sessionStorage.getItem("loadedSongTitle"),
-      loadedSongComposer: sessionStorage.getItem("loadedSongComposer")
-    })
+  try {
+    if (sessionStorage && sessionStorage.getItem("drums")) {
+      this.setState({
+        drums: JSON.parse(sessionStorage.getItem("drums")),
+        synth: JSON.parse(sessionStorage.getItem("synth")),
+        bpm: sessionStorage.getItem("bpm"),
+        synthWaveForm: sessionStorage.getItem("waveform"),
+        loadedSongTitle: sessionStorage.getItem("loadedSongTitle"),
+        loadedSongComposer: sessionStorage.getItem("loadedSongComposer")
+      })
+    }
+  } catch (err) {
+    console.log(err)
   }
 }
 
@@ -109,21 +113,8 @@ changeWaveForm = newWaveForm => {
 clearMatrix = () => {
   console.log("Cleared sequenser...")
   this.setState({
-    synth: [
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    ],
-    drums: [
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-      [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    ],
+    synth: EMPTY_SYNTH_MATRIX(),
+    drums: EMPTY_DRUM_MATRIX(),
     bpm: DEFAULT_BPM,
     synthWaveForm: DEFAULT_WAVEFORM,
     loadedSongTitle: DEFAULT_SONG_TITLE,
@@ -232,8 +223,10 @@ render() {
     <div className="musicMaker-wrapper">
       <section className="sequenser-container">
         <h1 className="composerPage-headline">COMPOSE</h1>
-        <h3 className="section-heading">SEQUENSER</h3>
-
+        <h3 className="section-heading">
+          SONG: {loadedSongTitle.toUpperCase()} <br />
+          BY: {loadedSongComposer.toUpperCase()}
+        </h3>
         <SynthModule
           synth={synth}
           activeBar={activeBar}

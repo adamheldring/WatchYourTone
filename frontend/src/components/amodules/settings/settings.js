@@ -20,7 +20,7 @@ class Settings extends React.Component {
     return (
       <section className="settings-container">
         <h2 className="composerPage-headline">SETTINGS</h2>
-        <h3 className="section-heading">SETTINGS</h3>
+        <h3 className="section-heading">TEMPO: {this.props.bpm} BPM</h3>
         <div className="meters">
           <input
             name="bpm"
@@ -29,13 +29,12 @@ class Settings extends React.Component {
             max="300"
             value={bpm}
             onChange={this.handleBpmChange} />
-          <label htmlFor="bpm">{this.props.bpm} BPM</label>
         </div>
 
         <div className="waveFormSetting-container">
+          <h3 className="section-heading">WAVEFORM: {this.props.synthWaveForm.toUpperCase()}</h3>
           <label className="radio-button-container" htmlFor="triangle">
             <img src="./assets/wf-triangle-small.png" className="waveform-image" alt="triangle-waveform" />
-            {" "}Triangle
             <input
               type="radio"
               id="triangle"
@@ -48,7 +47,6 @@ class Settings extends React.Component {
           <br />
           <label className="radio-button-container" htmlFor="square">
             <img src="./assets/wf-square-small.png" className="waveform-image" alt="square-waveform" />
-            {" "}Square
             <input
               type="radio"
               id="square"
@@ -61,7 +59,6 @@ class Settings extends React.Component {
           <br />
           <label className="radio-button-container" htmlFor="sawtooth">
             <img src="./assets/wf-sawtooth-small.png" className="waveform-image" alt="sawtooth-waveform" />
-            {" "}Sawtooth
             <input
               type="radio"
               id="sawtooth"
@@ -74,7 +71,6 @@ class Settings extends React.Component {
           <br />
           <label className="radio-button-container" htmlFor="sine">
             <img src="./assets/wf-sine-small.png" className="waveform-image" alt="sine-waveform" />
-            {" "}Sine
             <input
               type="radio"
               id="sine"
@@ -85,10 +81,6 @@ class Settings extends React.Component {
             <span className="custom-radio-button" />
           </label>
           <br />
-        </div>
-        <div className="songDetails-container">
-          <h2 className="songDetails">{`"${loadedSongTitle}"`}</h2>
-          <h3 className="songDetails">BY {loadedSongComposer}</h3>
         </div>
       </section>
     )

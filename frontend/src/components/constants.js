@@ -4,22 +4,22 @@
 export const WYT_SERVER_URL = process.env.NODE_ENV === "production" ? "https://watchyourtone.herokuapp.com" : "http://localhost:8080"
 
 // Creates default empty SYNTH MATRIX for sequenser
-export const EMPTY_SYNTH_MATRIX = [
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+export const EMPTY_SYNTH_MATRIX = () => [
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false)
 ]
 
 // Creates default empty DRUM MATRIX for sequenser
-export const EMPTY_DRUM_MATRIX = [
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+export const EMPTY_DRUM_MATRIX = () => [
+  new Array(16).fill(false),
+  new Array(16).fill(false),
+  new Array(16).fill(false)
 ]
 
 // NOISE SYNTH SETTINGS OBJECT – Adam's snare drum sound
@@ -58,9 +58,9 @@ export const DEFAULT_BPM = 140
 // DEFAULT SYNTH WAVEFORM
 export const DEFAULT_WAVEFORM = "triangle"
 
-export const DEFAULT_SONG_TITLE = "New masterpiece"
+export const DEFAULT_SONG_TITLE = "Untitled"
 
-export const DEFAULT_COMPOSER = "You"
+export const DEFAULT_COMPOSER = "Unknown"
 
 export const DRUM_ICONS = [
   "./assets/kick-100-inv.png",

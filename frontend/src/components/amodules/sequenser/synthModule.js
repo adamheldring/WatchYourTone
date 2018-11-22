@@ -34,8 +34,7 @@ class SynthModule extends React.Component {
                 synthKeyIndex={synthKeyIndex}
                 bars={synth[synthKeyIndex]}
                 synthKeyMatrix={synth}
-                handleNoteClick={(barIndex) => this.passUpNoteClick(synthKeyIndex, barIndex)}
-              />
+                handleNoteClick={barIndex => this.passUpNoteClick(synthKeyIndex, barIndex)} />
             })}
             </tbody>
         </table>
