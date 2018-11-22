@@ -20,7 +20,18 @@
   display: block;
 
   &__field {
+    font-family: "Retro", sans-serif;
+    font-size: 20px;
     margin: 5px 0;
+    border: none;
+    padding: 10px;
+    color: #272727;
+
+    &:focus {
+      color: #c306d8;
+      // color: #0088aa;
+      // color: #E87FFC;
+    }
   }
 
   &__button {
@@ -29,17 +40,38 @@
   }
 
   &__select {
-    width: 130px;
+    // width: 130px;
+    // margin: 5px 0;
+    font-family: "Retro", sans-serif;
+    font-size: 20px;
     margin: 5px 0;
+    border: none;
+    padding: 10px;
+    width: 400px;
+    color: #414141s;
+
   }
 }
 
-.loadForm-container {
-  // margin-top: 20px;
-  padding: 10px;
-  width: 400px;
+.saveForm-container {
+  margin-top: 40px;
+  margin-right: 110px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  // background: pink;
+}
+
+.loadForm-container {
+  margin-top: 40px;
+  margin-right: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 10px;
+  width: 400px;
+  // align-items: center;
   // background: lightgrey;
 }

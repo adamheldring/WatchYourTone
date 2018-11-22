@@ -31,9 +31,15 @@ loadSongList() {
 
 handleFormChange = e => {
   console.log(e.target, e.target.value)
-  this.setState({
-    [e.target.name]: e.target.value
-  })
+  if (e.target.type === "text") {
+    this.setState({
+      [e.target.name]: e.target.value.toUpperCase()
+    })
+  } else {
+    this.setState({
+      [e.target.name]: e.target.value
+    })
+  }
 }
 
 clearFields= () => {
@@ -131,31 +137,33 @@ render() {
   return (
     <div className="page-wrapper page-wrapper--saveLoad">
       <div className="saveForm-container">
-        <h1 className="composerPage-headline">SAVE</h1>
+        <h1 className="composerPage-headline composerPage-headline--saveLoad">SAVE:</h1>
         <form id="postingForm" className="postingForm" onSubmit={this.submitSave}>
-          <input className="formInput formInput__field" value={songTitle} type="text" placeholder="Song Title" name="songTitle" required onChange={this.handleFormChange} />
-          <input className="formInput formInput__field" value={composer} type="text" placeholder="Composer Name" name="composer" required onChange={this.handleFormChange} />
+          <input className="formInput formInput__field" value={songTitle} type="text" placeholder="SONG TITLE" name="songTitle" required onChange={this.handleFormChange} />
+          <input className="formInput formInput__field" value={composer} type="text" placeholder="COMPOSER NAME" name="composer" required onChange={this.handleFormChange} />
           <input className="submitButton formInput__button" type="submit" value="Save" />
         </form>
       </div>
 
       <div className="loadForm-container">
-        <h1 className="composerPage-headline">LOAD</h1>
+        <h1 className="composerPage-headline composerPage-headline--saveLoad">LOAD:</h1>
         <form id="loadingForm" className="loadingForm" onSubmit={this.submitLoad}>
           <select
             name="songToLoad"
             className="formInput formInput formInput__select"
             onChange={this.handleFormChange}
-            size="10">
-            {songList.map((song, index) => (
+            size="5">
+            {songList
+              .sort((a,b)=>(a.songId<b.songId) ? 1 : ((b.songId<a.songId) ? -1 : 0))
+              .map((song, index) => (
               <option
                 key={index}
                 value={song.songId}
-                >{song.songTitle}</option>
+                >{`${song.songTitle.toUpperCase()} (${song.composer.toUpperCase()})`}</option>
             ))}
           </select>
           <input className="submitButton formInput__button" type="submit" value="Load" />
-        </form>
+        </form>– 
       </div>
 
     </div>

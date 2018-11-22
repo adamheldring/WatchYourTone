@@ -54,8 +54,8 @@ checkForActiveSession = () => {
         bpm: sessionStorage.getItem("bpm"),
         synthWaveForm: sessionStorage.getItem("waveform"),
         loadedSongTitle: sessionStorage.getItem("loadedSongTitle"),
-        loadedSongComposer: sessionStorage.getItem("loadedSongComposer")
-      })
+        loadedSongComposer: sessionStorage.getItem("loadedSongComposer"),
+      }, () => this.handleBpmChange(this.state.bpm))
     }
   } catch (err) {
     console.log(err)
