@@ -1,5 +1,19 @@
 .settings-container {
   color: #FFF;
+  &__bpm {
+    width: 150px;
+    margin: 0 auto;
+    .section-heading {
+      text-align: left;
+    }
+  }
+  &__waveform {
+    width: 190px;
+    margin: 0 auto;
+    .section-heading {
+      text-align: left;
+    }
+  }
 }
 
 .waveform-image {
