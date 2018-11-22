@@ -1,0 +1,73 @@
+// MEDIA QUERIES
+@media screen and (max-width: 1200px) {
+
+  // COMPOSER-SECTION
+  .musicMaker-wrapper {
+    width: 600px;
+    flex-direction: column;
+  }
+  .sequenser-container {
+    position: relative;
+    right: 10px;
+  }
+  .transportControls {
+    margin-bottom: 20px;
+  }
+
+  // SETTINGS-SECTION
+  .meters {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .waveFormSetting-container {
+    padding: 10px 60px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .section-heading--waveform {
+    position: relative;
+    left: 35px;
+  }
+  .radio-button-container {
+    width: 200px;
+  }
+  .waveform-image {
+    left: 40px;
+  }
+
+  // SAVE & LOAD - SECTION
+  .page-wrapper--saveLoad {
+    flex-direction: column;
+    width: 400px;
+    margin-bottom: 150px;
+
+    .composerPage-headline--saveLoad {
+      margin-right: 0;
+    }
+
+    .saveForm-container {
+      width: 400px;
+      flex-direction: column;
+      align-items: center;
+    }
+    .loadForm-container {
+      width: 400px;
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .formInput {
+    &__button {
+      margin-top: 10px;
+      &--save {
+        position: static;
+      }
+      &--load {
+        position: static;
+      }
+    }
+  }
+
+}

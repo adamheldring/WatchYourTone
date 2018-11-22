@@ -35,7 +35,7 @@ class Settings extends React.Component {
 
         <div className="waveFormSetting-container">
           <div className="settings-container__waveform">
-            <h3 className="section-heading">WAVEFORM: <span className="highlighted">{this.props.synthWaveForm.toUpperCase()}</span></h3>
+            <h3 className="section-heading section-heading--waveform">WAVEFORM: <span className="highlighted">{this.props.synthWaveForm.toUpperCase()}</span></h3>
           </div>
           <label className="radio-button-container" htmlFor="triangle">
             <img src="./assets/wf-triangle-small.png" className="waveform-image" alt="triangle-waveform" />

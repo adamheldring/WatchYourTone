@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Header from "./header/header"
 import ComposerPage from "./pages/composerPage/composerPage"
 import NotFound from "./pages/404/404"
+import "./mediaqueries.scss"
 
 class App extends React.Component {
 

@@ -12,10 +12,6 @@
   background: #272727;
 }
 
-.page-wrapper {
-  // background: pink;
-}
-
 .tableRowExplainer {
   min-height: 22px;
   color: #FFF;
@@ -33,4 +29,8 @@
   &--drums {
     // background: yellow;
   }
+}
+
+@media screen and (max-width: 1150px) {
+  // media queries
 }
