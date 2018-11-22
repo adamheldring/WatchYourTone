@@ -7,12 +7,10 @@ class Header extends React.Component {
   render() {
     return (
       <div className="header-container">
-        <h2>WATCH YOUR TONE</h2>
-{/*        <nav className="nav-container">
-          <Link to="/" className="menuItem">COMPOSE</Link>
-          <Link to="/settings/" className="menuItem">SETTINGS</Link>
-          <Link to="/saveload/" className="menuItem">SAVE/LOAD</Link>
-        </nav> */}
+        <div className="header__mainHeading-container">
+          <h2 className="header__mainHeading">WATCH YOUR TONE</h2>
+          <h2 className="header__mainHeading header__mainHeading--shadow">WATCH YOUR TONE</h2>
+        </div>
       </div>
     )
   }

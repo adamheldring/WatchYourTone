@@ -1,14 +1,23 @@
 .header-container {
-  font-family: "Retro";
+  font-family: "Retro", sans-serif;
   background: lightgreen;
   display: flex;
   justify-content: center;
 }
-.nav-container {
-  display: flex;
-  align-items: center;
-  margin: 0px 40px;
+.header__mainHeading-container {
+  position: relative;
+  width: 230px;
 }
-.menuItem {
-  margin: 20px;
+.header__mainHeading {
+  font-size: 30px;
+  position: relative;
+  color: #272727;
+  z-index: 10;
+  &--shadow {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    z-index: 1;
+    color: #2fbc2f;
+  }
 }
