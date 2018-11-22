@@ -130,9 +130,8 @@ render() {
   const { songTitle, composer, songList } = this.state
   return (
     <div className="page-wrapper page-wrapper--saveLoad">
-      <h2 className="composerPage-headline">SAVE & LOAD</h2>
       <div className="saveForm-container">
-        <h2>SAVE SONG</h2>
+        <h1 className="composerPage-headline">SAVE</h1>
         <form id="postingForm" className="postingForm" onSubmit={this.submitSave}>
           <input className="formInput formInput__field" value={songTitle} type="text" placeholder="Song Title" name="songTitle" required onChange={this.handleFormChange} />
           <input className="formInput formInput__field" value={composer} type="text" placeholder="Composer Name" name="composer" required onChange={this.handleFormChange} />
@@ -141,7 +140,7 @@ render() {
       </div>
 
       <div className="loadForm-container">
-        <h2>LOAD SONG</h2>
+        <h1 className="composerPage-headline">LOAD</h1>
         <form id="loadingForm" className="loadingForm" onSubmit={this.submitLoad}>
           <select
             name="songToLoad"

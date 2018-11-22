@@ -20,7 +20,7 @@ class Settings extends React.Component {
     return (
       <section className="settings-container">
         <h2 className="composerPage-headline">SETTINGS</h2>
-        <h3 className="section-heading">TEMPO: {this.props.bpm} BPM</h3>
+        <h3 className="section-heading">TEMPO: <span className="highlighted">{this.props.bpm}</span> BPM</h3>
         <div className="meters">
           <input
             name="bpm"
@@ -32,7 +32,7 @@ class Settings extends React.Component {
         </div>
 
         <div className="waveFormSetting-container">
-          <h3 className="section-heading">WAVEFORM: {this.props.synthWaveForm.toUpperCase()}</h3>
+          <h3 className="section-heading">WAVEFORM: <span className="highlighted">{this.props.synthWaveForm.toUpperCase()}</span></h3>
           <label className="radio-button-container" htmlFor="triangle">
             <img src="./assets/wf-triangle-small.png" className="waveform-image" alt="triangle-waveform" />
             <input

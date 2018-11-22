@@ -223,10 +223,15 @@ render() {
     <div className="musicMaker-wrapper">
       <section className="sequenser-container">
         <h1 className="composerPage-headline">COMPOSE</h1>
-        <h3 className="section-heading">
-          SONG: {loadedSongTitle.toUpperCase()} <br />
-          BY: {loadedSongComposer.toUpperCase()}
-        </h3>
+        {this.state.loadedSongTitle !== "untitled" ?
+          <h3 className="section-heading">
+            {"SONG:"} <span className="highlighted">{`"${loadedSongTitle.toUpperCase()}" `}</span>
+            {" "}
+            {"BY:"} <span className="highlighted">{loadedSongComposer.toUpperCase()}</span>
+        </h3> : <h3 className="section-heading"><span className="highlighted">NEW SONG</span></h3>
+
+        }
+
         <SynthModule
           synth={synth}
           activeBar={activeBar}

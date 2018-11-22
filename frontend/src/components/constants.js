@@ -58,9 +58,9 @@ export const DEFAULT_BPM = 140
 // DEFAULT SYNTH WAVEFORM
 export const DEFAULT_WAVEFORM = "triangle"
 
-export const DEFAULT_SONG_TITLE = "Untitled"
+export const DEFAULT_SONG_TITLE = "untitled"
 
-export const DEFAULT_COMPOSER = "Unknown"
+export const DEFAULT_COMPOSER = "unknown"
 
 export const DRUM_ICONS = [
   "./assets/kick-100-inv.png",
