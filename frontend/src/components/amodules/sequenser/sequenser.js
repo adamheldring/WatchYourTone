@@ -119,7 +119,7 @@ clearMatrix = () => {
     synthWaveForm: DEFAULT_WAVEFORM,
     loadedSongTitle: DEFAULT_SONG_TITLE,
     loadedSongComposer: DEFAULT_COMPOSER
-  }, () => console.log("STATE RIGHT AFTER RESET: ", this.state))
+  }, () => this.handleBpmChange(this.state.bpm))
   sessionStorage.removeItem("drums")
   sessionStorage.removeItem("synth")
   sessionStorage.removeItem("bpm")
