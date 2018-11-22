@@ -1,6 +1,6 @@
 import React from "react"
 import "./settings.scss"
-import "./customRadioButtons.scss"
+import "./pressRadioButtons.scss"
 import "./customRangeInput.scss"
 
 class Settings extends React.Component {

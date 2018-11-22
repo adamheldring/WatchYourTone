@@ -17,7 +17,8 @@
 .section-heading {
   font-family: "Retro";
   color: #FFF;
-  margin-top: 30px;
+  margin-top: 20px;
+  font-size: 20px;
 }
 
 .songDetails {
@@ -100,4 +101,23 @@
 
 .drumIcon {
   width: 30px;
+}
+
+.transportControl {
+  &__button {
+    width: 70px;
+    height: 60px;
+    margin: 20px 5px 0;
+    border-radius: 5px;
+    &:hover {
+      cursor: pointer;
+    }
+    &:active {
+      background-color: darkgrey;
+    }
+  }
+  &__symbol {
+    color: #272727;
+    font-size: 20px;
+  }
 }
