@@ -3,7 +3,6 @@ import Tone from "tone"
 import SynthModule from "./synthModule"
 import DrumsModule from "./drumsModule"
 import Settings from "../settings/settings"
-import SaveLoad from "../saveLoad/saveLoad"
 import { EMPTY_SYNTH_MATRIX, EMPTY_DRUM_MATRIX, SNARE_DRUM_SETTINGS, HIHAT_DRUM_SETTINGS,
   SYNTH_NOTES, DEFAULT_BPM, DEFAULT_WAVEFORM, DEFAULT_SONG_TITLE, DEFAULT_COMPOSER } from "../../constants"
 import "./sequenser.scss"
@@ -18,8 +17,7 @@ state = {
   bpm: 140,
   synthWaveForm: "triangle",
   loadedSongTitle: DEFAULT_SONG_TITLE,
-  loadedSongComposer: DEFAULT_COMPOSER,
-  newSongLoaded: false
+  loadedSongComposer: DEFAULT_COMPOSER
 }
 
 componentDidMount() {
@@ -29,9 +27,9 @@ componentDidMount() {
 }
 
 componentDidUpdate(prevProps, prevState) {
-  if (this.state.newSongLoaded) {
+  if (this.props.newSongLoaded) {
     this.checkForActiveSession()
-    this.resetSongLoader()
+    this.props.resetSongLoader()
   }
   if (this.state !== prevState) {
     sessionStorage.setItem("drums", JSON.stringify(this.state.drums))
@@ -139,17 +137,6 @@ clearMatrix = () => {
   sessionStorage.removeItem("loadedSongComposer")
 }
 
-loadNewSong = newSongLoaded => {
-  console.log("New song just loaded to SessionStorage...")
-  console.log("NewSongLoaded: ", newSongLoaded)
-  this.setState({ newSongLoaded })
-}
-
-resetSongLoader = () => {
-  console.log("New song loaded to sequenser, loader reset...")
-  this.setState({ newSongLoaded: false })
-}
-
 soundGenerator = () => {
   // ---------------------- //
   //   MASTER & FX SECTION  //
@@ -243,14 +230,6 @@ render() {
   return (
 
     <div className="musicMaker-wrapper">
-      <Settings
-        bpm={bpm}
-        changeBpm={newBpm => this.handleBpmChange(newBpm)}
-        synthWaveForm={synthWaveForm}
-        changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)}
-        loadedSongTitle={loadedSongTitle}
-        loadedSongComposer={loadedSongComposer} />
-
       <section className="sequenser-container">
         <h1 className="composerPage-headline">COMPOSE</h1>
         <h3 className="section-heading">SEQUENSER</h3>
@@ -273,7 +252,13 @@ render() {
           <button onClick={this.clearMatrix}>CLEAR &#9167;</button>
         </div>
       </section>
-      <SaveLoad loadNewSong={newSongLoaded => this.loadNewSong(newSongLoaded)} />
+      <Settings
+        bpm={bpm}
+        changeBpm={newBpm => this.handleBpmChange(newBpm)}
+        synthWaveForm={synthWaveForm}
+        changeWaveForm={newWaveForm => this.changeWaveForm(newWaveForm)}
+        loadedSongTitle={loadedSongTitle}
+        loadedSongComposer={loadedSongComposer} />
     </div>
   )
 }
