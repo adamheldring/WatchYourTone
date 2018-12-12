@@ -248,7 +248,7 @@ render() {
 
         <div className="transportControls">
           <button onClick={this.startPlaying} className="transportControl transportControl__button" id="playButton"><span className="transportControl__symbol">&#9654;</span><br />PLAY</button>
-          <button onClick={this.stopPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol">&#9632;</span><br />STOP</button>
+          <button onClick={this.stopPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol transportControl__symbol--stop">&#9632;</span><br />STOP</button>
           <button onClick={this.rewindPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol">&#9664;&#9664;</span><br />REWIND</button>
           <button onClick={this.clearMatrix} className="transportControl transportControl__button"><span className="transportControl__symbol">&#9167;</span><br />CLEAR</button>
         </div>
