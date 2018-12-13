@@ -11,12 +11,10 @@ state = {
 }
 
 loadNewSong = newSongLoaded => {
-  console.log("New song just loaded to SessionStorage...")
   this.setState({ newSongLoaded })
 }
 
 resetSongLoader = () => {
-  console.log("New song loaded to sequenser, loader reset...")
   this.setState({ newSongLoaded: false })
 }
 

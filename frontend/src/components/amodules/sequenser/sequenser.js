@@ -22,6 +22,7 @@ state = {
 }
 
 componentDidMount() {
+  console.log("(Optimized for latest version of Chrome Desktop)")
   Tone.Transport.cancel()
   this.soundGenerator()
   this.checkForActiveSession()
@@ -175,15 +176,15 @@ soundGenerator = () => {
 
     // UPDATE SYNTH WAVEFORM IF USER SWITCHED SETTING
     if (synths[0].oscillator.type !== this.state.synthWaveForm) {
-      const setNewWaveFrom = synths.map(synth => {
+      const setNewWaveForm = synths.map(synth => {
         return new Promise(resolve => {
           synth.oscillator.type = this.state.synthWaveForm
           resolve()
         })
       })
-      // Promise.all(setNewWaveFrom).then(
-      //   console.log("All synths updated to new waveform...")
-      // )
+      Promise.all(setNewWaveForm).then(
+        // console.log("All synths updated to new waveform...")
+      )
     }
 
     // GENERATE USER'S SYNTH NOTES
