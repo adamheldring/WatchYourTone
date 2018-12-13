@@ -64,19 +64,16 @@ checkForActiveSession = () => {
 }
 
 startPlaying = () => {
-  console.log("PLAYING")
   StartAudioContext(Tone.context, '#playButton').then(() => {
   	Tone.Transport.start("+0.2")
   })
 }
 
 stopPlaying = () => {
-  console.log("STOPPED")
   Tone.Transport.stop()
 }
 
 rewindPlaying = () => {
-  console.log("Rewind")
   this.setState({ resetTransport: true, activeBar: 0 })
 }
 
@@ -85,7 +82,7 @@ handleDrumClick = (drumIndex, barIndex) => {
   newDrumMatrix[drumIndex][barIndex] = !this.state.drums[drumIndex][barIndex]
   this.setState({
     drums: newDrumMatrix
-  }, console.table(this.state.drums))
+  })
 }
 
 handleNoteClick = (synthKeyIndex, barIndex) => {
@@ -93,28 +90,24 @@ handleNoteClick = (synthKeyIndex, barIndex) => {
   newSynthMatrix[synthKeyIndex][barIndex] = !this.state.synth[synthKeyIndex][barIndex]
   this.setState({
     synth: newSynthMatrix
-  }, console.table(this.state.synth))
+  })
 }
 
 handleBpmChange = newBpm => {
   this.setState({
     bpm: newBpm
   }, () => {
-    console.log("STATE bpm: ", this.state.bpm)
-    console.log("TRANSPORT bpm: ", Tone.Transport.bpm.value)
     Tone.Transport.bpm.rampTo(this.state.bpm, 0.2)
   })
 }
 
 changeWaveForm = newWaveForm => {
-  console.log(newWaveForm)
   this.setState({
     synthWaveForm: newWaveForm
-  }, () => console.log("STATE waveform: ", this.state.synthWaveForm))
+  })
 }
 
 clearMatrix = () => {
-  console.log("Cleared sequenser...")
   this.setState({
     synth: EMPTY_SYNTH_MATRIX(),
     drums: EMPTY_DRUM_MATRIX(),

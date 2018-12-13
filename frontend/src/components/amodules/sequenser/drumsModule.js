@@ -5,7 +5,6 @@ import { COLOR_GRADIENT } from "../../constants"
 class DrumsModule extends React.Component {
 
   passUpBeatClick = (drumIndex, barIndex) => {
-    console.log("Someone clicked beat inside drums")
     this.props.handleDrumClick(drumIndex, barIndex)
   }
 

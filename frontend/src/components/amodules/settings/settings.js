@@ -7,12 +7,10 @@ class Settings extends React.Component {
 
   handleBpmChange = e => {
     this.props.changeBpm(e.target.value)
-    console.log("SETTINGS PAGE SAYING NEW BPM: ", e.target.value)
   }
 
   handleWaveChange = e => {
     this.props.changeWaveForm(e.target.value)
-    console.log("SETTINGS PAGE SAYING NEW WF: ", e.target.value)
   }
 
   render() {

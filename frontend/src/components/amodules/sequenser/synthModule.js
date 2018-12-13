@@ -5,7 +5,6 @@ import { COLOR_GRADIENT } from "../../constants"
 class SynthModule extends React.Component {
 
   passUpNoteClick = (synthKeyIndex, barIndex) => {
-    console.log("Someone clicked note inside synth")
     this.props.handleNoteClick(synthKeyIndex, barIndex)
   }
 

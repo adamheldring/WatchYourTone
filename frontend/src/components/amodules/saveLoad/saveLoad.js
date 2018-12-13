@@ -17,20 +17,16 @@ componentDidMount() {
 }
 
 loadSongList() {
-  console.log("Loading saved songlist...")
-  console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
-
   fetch(`${WYT_SERVER_URL}/songs/`)
     .then(response => response.json())
     .then(songList => {
       this.setState({
         songList
-      }, () => console.log(this.state.songList))
+      })
     })
 }
 
 handleFormChange = e => {
-  console.log(e.target, e.target.value)
   if (e.target.type === "text") {
     this.setState({
       [e.target.name]: e.target.value.toUpperCase()
@@ -62,9 +58,7 @@ submitSave = e => {
     bpm: sessionStorage.getItem("bpm"),
     waveform: sessionStorage.getItem("waveform")
   }
-  console.log(newSong)
 
-  console.log(`TEST: ${WYT_SERVER_URL}/songs/`)
   fetch(`${WYT_SERVER_URL}/songs/`, {
     headers: {
       "Content-Type": "application/json"
@@ -92,11 +86,6 @@ submitLoad = e => {
   if (!songToLoad) {
     console.log("Choose a song to load...")
   } else {
-    console.log(`Loading song with id: ${songToLoad}...`)
-
-    // const watchYourToneServer = process.env.WYT_SERVER_URL || "http://localhost:8080"
-    console.log(`TEST: ${WYT_SERVER_URL}/songs/${songToLoad}`)
-
     fetch(`${WYT_SERVER_URL}/songs/${songToLoad}`)
       .then(response => response.json())
       .then(loadedSong => {
@@ -104,23 +93,13 @@ submitLoad = e => {
           loadedSong
         }, () => {
           this.loadSongToStorage()
-          console.log(this.state)
         })
       })
-
-    // CREATE MESSAGE (Are you sure, do you wnat to save song first?)
   }
 }
 
 loadSongToStorage = () => {
   const { loadedSong } = this.state
-  console.log("NEWLY LOADED SONG: ", loadedSong)
-  console.table(JSON.parse(loadedSong.drums))
-  console.table(JSON.parse(loadedSong.synth))
-  console.log(loadedSong.bpm)
-  console.log(loadedSong.waveform)
-  console.log(loadedSong.songTitle)
-  console.log(loadedSong.composer)
 
   sessionStorage.setItem("drums", loadedSong.drums)
   sessionStorage.setItem("synth", loadedSong.synth)
