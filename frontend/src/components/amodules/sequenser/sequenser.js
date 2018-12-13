@@ -181,9 +181,9 @@ soundGenerator = () => {
           resolve()
         })
       })
-      Promise.all(setNewWaveFrom).then(
-        console.log("All synths updated to new waveform...")
-      )
+      // Promise.all(setNewWaveFrom).then(
+      //   console.log("All synths updated to new waveform...")
+      // )
     }
 
     // GENERATE USER'S SYNTH NOTES
@@ -240,10 +240,10 @@ render() {
           />
 
         <div className="transportControls">
-          <button onClick={this.startPlaying} className="transportControl transportControl__button" id="playButton"><span className="transportControl__symbol"><i class="fas fa-play"></i></span><br />PLAY</button>
-          <button onClick={this.stopPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol transportControl__symbol--stop"><i class="fas fa-stop"></i></span><br />STOP</button>
-          <button onClick={this.rewindPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol"><i class="fas fa-backward"></i></span><br />REWIND</button>
-          <button onClick={this.clearMatrix} className="transportControl transportControl__button"><span className="transportControl__symbol"><i class="fas fa-eject"></i></span><br />CLEAR</button>
+          <button onClick={this.startPlaying} className="transportControl transportControl__button" id="playButton"><span className="transportControl__symbol"><i className="fas fa-play"></i></span><br />PLAY</button>
+          <button onClick={this.stopPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol transportControl__symbol--stop"><i className="fas fa-stop"></i></span><br />STOP</button>
+          <button onClick={this.rewindPlaying} className="transportControl transportControl__button"><span className="transportControl__symbol"><i className="fas fa-backward"></i></span><br />REWIND</button>
+          <button onClick={this.clearMatrix} className="transportControl transportControl__button"><span className="transportControl__symbol"><i className="fas fa-eject"></i></span><br />CLEAR</button>
         </div>
       </section>
       <Settings

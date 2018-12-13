@@ -14,7 +14,7 @@ class Settings extends React.Component {
   }
 
   render() {
-    const { bpm, synthWaveForm, loadedSongTitle, loadedSongComposer } = this.props
+    const { bpm, synthWaveForm } = this.props
     return (
       <section className="settings-container">
         <h2 className="composerPage-headline">SETTINGS</h2>

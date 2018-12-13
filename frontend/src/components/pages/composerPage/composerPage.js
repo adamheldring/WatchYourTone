@@ -1,5 +1,4 @@
 import React from "react"
-import Header from "../../header/header"
 import Sequenser from "../../amodules/sequenser/sequenser"
 import SaveLoad from "../../amodules/saveLoad/saveLoad"
 
