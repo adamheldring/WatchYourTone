@@ -22,7 +22,9 @@ state = {
 }
 
 componentDidMount() {
-  console.log("(Optimized for latest version of Chrome Desktop)")
+  console.log("* Optimized for latest version of Chrome Desktop *")
+  console.log("Adam Heldring – Final Project @ Technigo Bootcamp")
+  console.log("wyt@adamheldring.com")
   Tone.Transport.cancel()
   this.soundGenerator()
   this.checkForActiveSession()
