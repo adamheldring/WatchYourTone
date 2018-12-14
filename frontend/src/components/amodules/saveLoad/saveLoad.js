@@ -142,7 +142,7 @@ render() {
             ))}
           </select>
           <input className="submitButton formInput__button formInput__button--load" type="submit" value="LOAD" />
-        </form>– 
+        </form> 
       </div>
 
     </div>
