@@ -11,7 +11,7 @@ I wanted to explore the Web Audio API. And being a musician at heart I felt it i
 :floppy_disk: 
 I'm keeping the save/load API and song catalog open for everybody to share and enjoy. So please be responsible when naming your masterpiece. 
 
-Thank you, start composing and please save what you make for others to hear! 
+:tada: Thank you, start composing and please save what you make for others to hear! 
 
 /Adam 
 
