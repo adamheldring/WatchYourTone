@@ -1,0 +1,10 @@
+– run frontend build script
+– that automatically copies frontend repo to backend public folder
+– then commit all changes to backed git repo
+– run heroku login
+– push to heroku
+
+git add .
+git commit -m "new build thursday"
+heroku login
+git push heroku master
