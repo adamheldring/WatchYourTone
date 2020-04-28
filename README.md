@@ -1,20 +1,11 @@
 # WATCH YOUR TONE
-## EXPLORING THE WEB AUDIO API
 
-### WEB SYNTH WITH DRUM MACHINE (...OR REALLY A 16-BAR STEP SEQUENSER)
+## SYNTH & DRUM SEQUENSER BUILT IN REACT AND NODE USING THE WEB AUDIO API.
 
-:musical_keyboard: 
-I wanted to explore the Web Audio API. And being a musician at heart I felt it important to preserve the feeling you get while trying out a "real life" instrument like a hardware synth... that it's okay to really mess around and play with it. That you're allowed to turn all the knobs and press all the buttons. Like it's meant to be played with and that there is no wrong way. 
+💻 A web synth with drum machine (…or really a 16-bar step sequenser) built in JavaScript. React in the front-end on top of Node and Express in the back-end talking to a MongoDB database. Exploring the Web Audio API and Tone.js. Matched with a retro design.
 
-:video_game: The idea was quickly matched with an over the top retro game design to make it look more fun and less hostile. I've also only included the white keys from the friendly C-scale. So no matter if you're a seasoned musician, a parent teaching your kid about music or just looking to have fun – go ahead and make a song. 
+🥁 Press play and start clicking the squares for synth notes and circles for drums. This instrument is meant to be played with and you don't have to be a musician. Make a song and save it to the database. Or load someone elses song for inspiration!
 
-:floppy_disk: 
-I'm keeping the save/load API and song catalog open for everybody to share and enjoy. So please be responsible when naming your masterpiece. 
+#### LIVE AT: [https://watchyourtone.herokuapp.com/](https://watchyourtone.herokuapp.com/)
 
-:tada: Thank you, start composing and please save what you make for others to hear! 
-
-/Adam 
-
-## Running live at: https://watchyourtone.herokuapp.com/
-
-## This is a work in progress.
+![Screenshot](https://github.com/adamheldring/Adam-Heldring-Portfolio/blob/master/code/public/assets/watchyourtone.jpg)
