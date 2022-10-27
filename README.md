@@ -6,6 +6,6 @@
 
 🥁 Press play and start clicking the squares for synth notes and circles for drums. This instrument is meant to be played with and you don't have to be a musician. Make a song and save it to the database. Or load someone elses song for inspiration!
 
-#### LIVE AT: [https://watchyourtone.herokuapp.com/](https://watchyourtone.herokuapp.com/)
+#### LIVE AT: [https://watchyourtone.onrender.com](https://watchyourtone.onrender.com/)
 
 ![Screenshot](https://github.com/adamheldring/Adam-Heldring-Portfolio/blob/master/code/public/assets/watchyourtone.jpg)
