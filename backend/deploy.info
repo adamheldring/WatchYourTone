@@ -8,3 +8,8 @@ git add .
 git commit -m "new build thursday"
 heroku login
 git push heroku master
+
+2022-10-27
+Moved app to render.com
+Due to Heroku no longer will support free hosting
+
