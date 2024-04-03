@@ -3,7 +3,7 @@
 // Detects and swithches server url depending on if live or local environment
 export const WYT_SERVER_URL =
   process.env.NODE_ENV === "production"
-    ? "https://watchyourtone.onrender.com/"
+    ? "https://watchyourtone.onrender.com"
     : "http://localhost:8080";
 
 // Creates default empty SYNTH MATRIX for sequenser
